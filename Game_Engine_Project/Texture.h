@@ -9,6 +9,7 @@ class Texture
 {
 public:
 	GLuint texid = 0;
+	GLuint texSamplerID = 0;
 	std::string type;
 	std::string filepath;
 

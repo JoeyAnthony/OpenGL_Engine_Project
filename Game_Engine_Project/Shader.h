@@ -9,6 +9,14 @@
 class Shader
 {
 public:
+	struct ShaderLocationData
+	{
+		GLuint modelmatrixloc;
+		GLuint viewmatrixloc;
+		GLuint projectionmatrixloc;
+	};
+	ShaderLocationData shaderlocations;
+
 	int shaderid_;
 
 	void UseShader();

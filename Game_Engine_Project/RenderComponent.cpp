@@ -10,6 +10,7 @@
 void RenderComponent::Render(CameraComponent* camera)
 {
 	modelinfo->transformshader.UseShader();
+	//modelinfo->bindTextures();
 
 	//update? or render? Render: because interpolation should be applied
 	glm::mat4 model;
@@ -29,9 +30,9 @@ void RenderComponent::Render(CameraComponent* camera)
 	model = glm::scale(model, parent->transform.scale);
 
 	//setting matrices / must be set while using the shader program or it won't work
-	glUniformMatrix4fv(modelinfo->shaderlocations.modelmatrixloc, 1, GL_FALSE, glm::value_ptr(model)); //model
-	glUniformMatrix4fv(modelinfo->shaderlocations.viewmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->view)); //view
-	glUniformMatrix4fv(modelinfo->shaderlocations.projectionmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->projection)); //projection
+	glUniformMatrix4fv(modelinfo->transformshader.shaderlocations.modelmatrixloc, 1, GL_FALSE, glm::value_ptr(model)); //model
+	glUniformMatrix4fv(modelinfo->transformshader.shaderlocations.viewmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->view)); //view
+	glUniformMatrix4fv(modelinfo->transformshader.shaderlocations.projectionmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->projection)); //projection
 
 	glBindVertexArray(modelinfo->VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);

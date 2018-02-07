@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
 
 		////print ticks in console
 		//std::cout << "DeltaTIme: " << Tools::DeltaTime() << std::endl;
-		std::cout << "interpolation: " << interpolation << std::endl;
+		//std::cout << "interpolation: " << interpolation << std::endl;
 		//std::cout << "fixedinterpolation: " << fixedinterpolation << std::endl;
 		//std::cout << "wpos: " << cam.position.x <<" "<< cam.position.y << " " << cam.position.z << std::endl;
 	}
