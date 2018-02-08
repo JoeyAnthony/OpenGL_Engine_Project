@@ -173,9 +173,10 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fragment2.glsl" />
-    <None Include="SimpleFragmentShader.glsl" />
-    <None Include="SimpleVertexShader.glsl" />
+    <None Include="DefaultShader.fs" />
+    <None Include="DefaultShader.vs" />
+    <None Include="PhongShader.vs" />
+    <None Include="PhongShader.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

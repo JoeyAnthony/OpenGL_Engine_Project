@@ -21,6 +21,7 @@ public:
 
 	Shader transformshader;
 
+	int texcount = 0;
 	std::vector<Texture> textures;
 	std::vector<Vertex> vertices;
 	GLuint VAO;
@@ -28,6 +29,7 @@ public:
 	GLuint EBO;
 
 	void init(uint32_t id) override;
+	void addShader(std::string vs, std::string fs);
 	void addTexture(std::string uniformName, std::string path);
 	void bindTextures();
 

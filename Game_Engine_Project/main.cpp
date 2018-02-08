@@ -33,6 +33,7 @@ float fixedinterpolation;
 void ErrorCallbak(int error, const char* description)
 {
 	fprintf(stderr, "Error: %s\n", description);
+	//std::cout << description << std::endl;
 }
 
 

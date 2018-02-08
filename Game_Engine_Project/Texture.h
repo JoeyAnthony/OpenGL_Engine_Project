@@ -9,6 +9,7 @@ class Texture
 {
 public:
 	GLuint texid = 0;
+	GLuint texSampler = 0;
 	GLuint texSamplerID = 0;
 	std::string type;
 	std::string filepath;
@@ -19,7 +20,8 @@ public:
 	void Unbind();
 
 	Texture();
-	Texture(const std::string &fileName);
+	Texture(const Texture &tex);
+	Texture(const std::string path);
 
 	~Texture();
 };

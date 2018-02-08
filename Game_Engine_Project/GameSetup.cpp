@@ -82,12 +82,31 @@ void GameSetup::CreateScene()
 	CameraComponent* cc = new CameraComponent();
 	camera->AddComponent(cc);
 	
-	GameObject* player = GameObject::Create(this);
+
+
+	GameObject* block = GameObject::Create(this);
 	ModelComponent* mc = new ModelComponent();
-	player->AddComponent(mc);
+	block->AddComponent(mc);
 	
 	RenderComponent* rc = new RenderComponent();
-	player->AddComponent(rc);
+	block->AddComponent(rc);
+
+	block->transform.position = glm::vec3(-2, 0, -3);
+	mc->addShader("PhongShader.vs", "PhongShader.fs");
+	mc->addTexture("texture1", "Assets/Textures/lena.png");
+	mc->addTexture("texture1", "Assets/Textures/godzilla.jpg");
+
+
+	GameObject* block2 = GameObject::Create(this);
+	ModelComponent* mc2 = new ModelComponent();
+	block2->AddComponent(mc2);
+
+	RenderComponent* rc2 = new RenderComponent();
+	block2->AddComponent(rc2);
+
+	block2->transform.position = glm::vec3(2, 0, -3);
+
+
 
 }
 

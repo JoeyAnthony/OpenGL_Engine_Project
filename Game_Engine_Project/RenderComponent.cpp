@@ -10,7 +10,7 @@
 void RenderComponent::Render(CameraComponent* camera)
 {
 	modelinfo->transformshader.UseShader();
-	//modelinfo->bindTextures();
+	modelinfo->bindTextures();
 
 	//update? or render? Render: because interpolation should be applied
 	glm::mat4 model;

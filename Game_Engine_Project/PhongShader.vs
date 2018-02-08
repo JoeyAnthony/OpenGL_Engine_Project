@@ -15,8 +15,6 @@ vec3 lightposition = vec3(2, 2, 2);
 
 void main()
 {
-	
-
 	vertcolor = color;
 	texcoord = tex;
 	gl_Position = projection * view * model * vec4(pos, 1.0f);

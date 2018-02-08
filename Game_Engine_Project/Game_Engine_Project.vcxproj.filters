@@ -130,13 +130,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleVertexShader.glsl">
+    <None Include="DefaultShader.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="SimpleFragmentShader.glsl">
+    <None Include="DefaultShader.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Fragment2.glsl">
+    <None Include="PhongShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="PhongShader.fs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

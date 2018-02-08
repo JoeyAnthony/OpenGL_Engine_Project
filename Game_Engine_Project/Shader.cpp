@@ -136,4 +136,5 @@ Shader::Shader(const char * vertex_file_path, const char * fragment_file_path)
 
 Shader::~Shader()
 {
+	//glDeleteProgram(shaderid_);
 }

@@ -42,11 +42,6 @@ void ModelComponent::init(uint32_t id)
 		3, 2, 6
 	};
 
-	transformshader = Shader("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
-
-	Texture texture = Texture("Assets/Textures/lena.png");
-	Texture texture2 = Texture("Assets/Textures/godzilla.jpg");
-;
 
 	//create vbo and vao
 	glGenBuffers(1, &VBO);
@@ -81,16 +76,21 @@ void ModelComponent::init(uint32_t id)
 	glEnableVertexAttribArray(2);
 
 
-
-
-	glActiveTexture(GL_TEXTURE0);
-	texture.Bind();
-	glActiveTexture(GL_TEXTURE1);
-	texture2.Bind();
+	////texture
+	//Texture texture = Texture("Assets/Textures/lena.png");
+	//Texture texture2 = Texture("Assets/Textures/godzilla.jpg");
+	//glActiveTexture(GL_TEXTURE0);
+	//texture.Bind();
+	//glActiveTexture(GL_TEXTURE1);
+	//texture2.Bind();
 	
+	//shader
+	transformshader = Shader("DefaultShader.vs", "DefaultShader.fs");
 	transformshader.UseShader(); //bind shader
-	transformshader.SetInt("texture1", 0);
-	transformshader.SetInt("texture2", 1);
+
+	////set texture samples in shader AFTER useshader
+	//transformshader.SetInt("texture1", 0);
+	//transformshader.SetInt("texture2", 1);
 
 	////textures
 	//addTexture("texture1", "Assets/Textures/Sanic2.png");
@@ -100,26 +100,39 @@ void ModelComponent::init(uint32_t id)
 	glUseProgram(0); //unbind shader
 }
 
+void ModelComponent::addShader(std::string vs, std::string fs)
+{
+	transformshader = Shader(vs.c_str(), fs.c_str());
+}
+
 void ModelComponent::addTexture(std::string uniformName ,std::string path)
 {
+	//texture
 	Texture texture = Texture(path);
-	texture.texSamplerID = GL_TEXTURE0 + textures.size();
+	texture.texSampler = GL_TEXTURE0 + texcount;
+	texture.texSamplerID = texcount;
 
-	glActiveTexture(texture.texSamplerID);
+	//Texture texture2 = Texture("Assets/Textures/godzilla.jpg");
+	glActiveTexture(texture.texSampler);
 	texture.Bind();
+	//glActiveTexture(GL_TEXTURE1);
+	//texture2.Bind();
 
-	transformshader.UseShader();
-	transformshader.SetInt(uniformName, textures.size());
+	transformshader.UseShader(); //bind shader
+
+	//set texture samples in shader AFTER useshader
+	transformshader.SetInt(uniformName, texture.texSamplerID);
 
 	texture.Unbind();
-	glUseProgram(0);
 	textures.push_back(texture);
+	texcount++;
 }
 
 void ModelComponent::bindTextures()
 {
 	for (int i = 0; i < textures.size(); i++)
 	{
+		glActiveTexture(textures[i].texSampler);
 		textures[i].Bind();
 	}
 }

@@ -62,9 +62,21 @@ void Texture::Unbind()
 
 
 
-Texture::Texture(const std::string &fileName)
+Texture::Texture(const Texture &tex)
 {
-	LoadTexture(fileName);
+	this->texid = tex.texid;
+	this->texSampler = tex.texSampler;
+	this->texSamplerID = tex.texSamplerID;
+	this->type = tex.type;
+	this->filepath = tex.filepath;
+	this->width = tex.width;
+	this->height = tex.height;
+	this->bpp = tex.bpp;
+}
+
+Texture::Texture(const std::string path)
+{
+	LoadTexture(path);
 }
 
 Texture::Texture()
