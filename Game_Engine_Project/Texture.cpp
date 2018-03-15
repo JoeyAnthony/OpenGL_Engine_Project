@@ -3,12 +3,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-void Texture::LoadTexture(const std::string & fileName)
+void Texture::LoadTexture(const std::string & path)
 {
-	filepath = fileName;
+	filepath = path;
 	unsigned char* imgData;
 	stbi_set_flip_vertically_on_load(true);
-	imgData = stbi_load(fileName.c_str(), &width, &height, &bpp, 4);
+	imgData = stbi_load(path.c_str(), &width, &height, &bpp, 4);
 
 
 	if (imgData != nullptr)
@@ -17,8 +17,8 @@ void Texture::LoadTexture(const std::string & fileName)
 		glBindTexture(GL_TEXTURE_2D, texid);
 
 		//setting image
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

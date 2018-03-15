@@ -53,6 +53,9 @@ void CameraComponent::Update()
 	parent->transform.forward = glm::normalize(front);
 
 	lastmouseposition = Mouse::GetMousePos();
+
+
+	//std::cout << parent->transform.rotation.x << " " << parent->transform.rotation.y << " " << parent->transform.rotation.z << std::endl;
 }
 
 void CameraComponent::LateUpdate() 

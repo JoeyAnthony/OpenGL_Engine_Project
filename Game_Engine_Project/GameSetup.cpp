@@ -83,28 +83,24 @@ void GameSetup::CreateScene()
 	camera->AddComponent(cc);
 	
 
-
 	GameObject* block = GameObject::Create(this);
-	ModelComponent* mc = new ModelComponent();
+	ModelComponent* mc = new ModelComponent("Assets/Models/nanosuit","nanosuit.obj");
 	block->AddComponent(mc);
 	
 	RenderComponent* rc = new RenderComponent();
 	block->AddComponent(rc);
 
-	block->transform.position = glm::vec3(-2, 0, -3);
-	mc->addShader("PhongShader.vs", "PhongShader.fs");
-	mc->addTexture("texture1", "Assets/Textures/lena.png");
-	mc->addTexture("texture1", "Assets/Textures/godzilla.jpg");
+	block->transform.position = glm::vec3(5, 0, 0);
+	mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
+	//GameObject* block2 = GameObject::Create(this);
+	//ModelComponent* mc2 = new ModelComponent();
+	//block2->AddComponent(mc2);
 
-	GameObject* block2 = GameObject::Create(this);
-	ModelComponent* mc2 = new ModelComponent();
-	block2->AddComponent(mc2);
+	//RenderComponent* rc2 = new RenderComponent();
+	//block2->AddComponent(rc2);
 
-	RenderComponent* rc2 = new RenderComponent();
-	block2->AddComponent(rc2);
-
-	block2->transform.position = glm::vec3(2, 0, -3);
+	//block2->transform.position = glm::vec3(5, 0, 2);
 
 
 

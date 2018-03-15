@@ -21,6 +21,12 @@ void Shader::SetFLoat(std::string name, float value)
 	glUniform1f(glGetUniformLocation(shaderid_, name.c_str()), value);
 }
 
+void Shader::SetVec3(std::string name, glm::vec3 value)
+{
+	GLuint id = glGetUniformLocation(shaderid_, name.c_str());
+	glUniform3f(id, value.x, value.y, value.z);
+}
+
 Shader::Shader()
 {
 }
@@ -128,9 +134,10 @@ Shader::Shader(const char * vertex_file_path, const char * fragment_file_path)
 	glDeleteShader(VertexShaderID);
 	glDeleteShader(FragmentShaderID);
 
-	shaderlocations.modelmatrixloc = glGetUniformLocation(shaderid_, "model");
-	shaderlocations.viewmatrixloc = glGetUniformLocation(shaderid_, "view");
-	shaderlocations.projectionmatrixloc = glGetUniformLocation(shaderid_, "projection");
+	shaderlocations.modelmatrixloc = glGetUniformLocation(shaderid_, "modelMatrix");
+	shaderlocations.viewmatrixloc = glGetUniformLocation(shaderid_, "viewMatrix");
+	shaderlocations.projectionmatrixloc = glGetUniformLocation(shaderid_, "projectionMatrix");
+	shaderlocations.normalmatrixloc = glGetUniformLocation(shaderid_, "normalMatrix");
 }
 
 

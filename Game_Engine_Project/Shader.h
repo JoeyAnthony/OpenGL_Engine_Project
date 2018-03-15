@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <glm\glm.hpp>
 
 class Shader
 {
@@ -14,6 +15,7 @@ public:
 		GLuint modelmatrixloc;
 		GLuint viewmatrixloc;
 		GLuint projectionmatrixloc;
+		GLuint normalmatrixloc;
 	};
 	ShaderLocationData shaderlocations;
 
@@ -24,6 +26,7 @@ public:
 	void SetBool(std::string name, bool value);
 	void SetInt(std::string name, int value);
 	void SetFLoat(std::string name, float value);
+	void SetVec3(std::string name, glm::vec3 value);
 
 	Shader();
 	Shader(const char * vertex_file_path, const char * fragment_file_path);

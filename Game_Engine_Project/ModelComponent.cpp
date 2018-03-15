@@ -10,15 +10,15 @@ void ModelComponent::init(uint32_t id)
 	Component::init(id);
 
 	static const Vertex cubeVertices[] = {
-		Vertex(glm::vec3(-1.0, -1.0, 1.0),		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f),		glm::vec2(0.0f, 0.0f)),		// bottom left back		0
-		Vertex(glm::vec3(1.0, -1.0, 1.0),		glm::vec4(1.0f, 0.0f, 0.0f,	1.0f),		glm::vec2(1.0f, 0.0f)),		// bottom right back	1
-		Vertex(glm::vec3(-1.0, 1.0, 1.0),		glm::vec4(1.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 1.0f)),		//top left back			2
-		Vertex(glm::vec3(1.0,  1.0, 1.0),		glm::vec4(0.0f, 0.0f, 1.0f,	1.0f),		glm::vec2(1.0f, 1.0f)),		// top right back		3
+		Vertex(glm::vec3(-1.0, -1.0, 1.0),		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f),		glm::vec2(0.0f, 0.0f),		glm::vec3(-1.0, -1.0, 1.0)),	// bottom left back		0
+		Vertex(glm::vec3(1.0, -1.0, 1.0),		glm::vec4(1.0f, 0.0f, 0.0f,	1.0f),		glm::vec2(1.0f, 0.0f),		glm::vec3(1.0, -1.0, 1.0)),	// bottom right back	1
+		Vertex(glm::vec3(-1.0, 1.0, 1.0),		glm::vec4(1.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 1.0f),		glm::vec3(-1.0, 1.0, 1.0)),	//top left back			2
+		Vertex(glm::vec3(1.0,  1.0, 1.0),		glm::vec4(0.0f, 0.0f, 1.0f,	1.0f),		glm::vec2(1.0f, 1.0f),		glm::vec3(1.0,  1.0, 1.0)),	// top right back		3
 
-		Vertex(glm::vec3(-1.0, -1.0, -1.0),		glm::vec4(0.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 0.0f)),		// bottom left front	4
-		Vertex(glm::vec3(1.0, -1.0, -1.0),		glm::vec4(1.0f, 0.0f, 0.0f,	1.0f),		glm::vec2(1.0f, 0.0f)),		// bottom right front	5
-		Vertex(glm::vec3(-1.0,  1.0, -1.0),		glm::vec4(1.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 1.0f)),		//top left front		6
-		Vertex(glm::vec3(1.0,  1.0, -1.0),		glm::vec4(0.0f, 0.0f, 1.0f,	1.0f),		glm::vec2(1.0f, 1.0f))		// top right front		7
+		Vertex(glm::vec3(-1.0, -1.0, -1.0),		glm::vec4(0.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 0.0f),		glm::vec3(-1.0, -1.0, -1.0)),	// bottom left front	4
+		Vertex(glm::vec3(1.0, -1.0, -1.0),		glm::vec4(1.0f, 0.0f, 0.0f,	1.0f),		glm::vec2(1.0f, 0.0f),		glm::vec3(1.0, -1.0, -1.0)),	// bottom right front	5
+		Vertex(glm::vec3(-1.0,  1.0, -1.0),		glm::vec4(1.0f, 1.0f, 0.0f,	1.0f),		glm::vec2(0.0f, 1.0f),		glm::vec3(-1.0,  1.0, -1.0)),	//top left front		6
+		Vertex(glm::vec3(1.0,  1.0, -1.0),		glm::vec4(0.0f, 0.0f, 1.0f,	1.0f),		glm::vec2(1.0f, 1.0f),		glm::vec3(1.0,  1.0, -1.0))	// top right front		7
 	};
 
 	static const unsigned int cubeIndices[] = {
@@ -75,6 +75,9 @@ void ModelComponent::init(uint32_t id)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(7 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(9 * sizeof(float)));
+	glEnableVertexAttribArray(3);
+
 
 	////texture
 	//Texture texture = Texture("Assets/Textures/lena.png");
@@ -85,7 +88,7 @@ void ModelComponent::init(uint32_t id)
 	//texture2.Bind();
 	
 	//shader
-	transformshader = Shader("DefaultShader.vs", "DefaultShader.fs");
+	transformshader = Shader("Assets/Shaders/DefaultShader.vs", "Assets/Shaders/DefaultShader.fs");
 	transformshader.UseShader(); //bind shader
 
 	////set texture samples in shader AFTER useshader
@@ -139,6 +142,11 @@ void ModelComponent::bindTextures()
 
 
 
+
+ModelComponent::ModelComponent(std::string directory, std::string modelname)
+{
+	model = Model(directory, modelname);
+}
 
 ModelComponent::ModelComponent()
 {

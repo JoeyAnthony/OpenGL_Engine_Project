@@ -10,10 +10,12 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Vertex.h"
+#include "Model.h"
 
 class ModelComponent : public Component
 {
 public:
+	Model model;
 
 	std::string modelpath;
 	std::string texturepath;
@@ -35,6 +37,7 @@ public:
 
 public:
 
+	ModelComponent(std::string directory, std::string modelname);
 	ModelComponent();
 	~ModelComponent(void);
 };
