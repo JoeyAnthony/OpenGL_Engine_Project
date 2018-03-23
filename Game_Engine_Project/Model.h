@@ -18,6 +18,7 @@ public:
 	//functions
 	void initModel();
 	void Draw(Shader shader);
+	void AddTexManual(std::string texname, std::string typeName, unsigned int meshindex);
 	Model();
 	Model(std::string directory, std::string modelname);
 	~Model();

@@ -37,22 +37,7 @@ bool justMoved = false;
 
 void ControllerComponent::Mouse(int x, int y)
 {
-	if (justMoved)
-	{
-		justMoved = false;
-		return;
-	}
-	//int dx = x - Tools::width / 2;
-	//int dy = y - Tools::height / 2;
-	//if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-	//{
-	//	parent->Rotation.y += dx / 10.0f;
-	//	parent->Rotation.x += dy / 10.0f;
 
-	//	glfwSetCursor(width / 2, height / 2);
-
-	//	justMoved = true;
-	//}
 }
 
 void ControllerComponent::init(uint32_t id)

@@ -27,6 +27,7 @@ public:
 	void SetInt(std::string name, int value);
 	void SetFLoat(std::string name, float value);
 	void SetVec3(std::string name, glm::vec3 value);
+	void SetVec3Array(std::string name, glm::vec3 v[]);
 
 	Shader();
 	Shader(const char * vertex_file_path, const char * fragment_file_path);

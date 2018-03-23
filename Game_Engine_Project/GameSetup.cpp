@@ -83,31 +83,81 @@ void GameSetup::CreateScene()
 	camera->AddComponent(cc);
 	
 
-	GameObject* block = GameObject::Create(this);
-	ModelComponent* mc = new ModelComponent("Assets/Models/nanosuit","nanosuit.obj");
-	block->AddComponent(mc);
+	//GameObject* block = GameObject::Create(this);
+	//ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
+	//block->AddComponent(mc);
+
+
+	//RenderComponent* rc = new RenderComponent();
+	//block->AddComponent(rc);
+
+	//block->transform.position = glm::vec3(0, 0, 0);
+	//mc->model.shader = Shader("Assets/Shaders/PBRTest.vs", "Assets/Shaders/PBRTest.fs");
+
+
+	//GameObject* plane = GameObject::Create(this);
+	//ModelComponent* pm = new ModelComponent("Assets/Models/Plane", "Plane.obj");
+	//plane->AddComponent(pm);
+	//plane->AddComponent(new RenderComponent());
+	//pm->model.shader = Shader("Assets/Shaders/Phong.vs", "Assets/Shaders/Phong.fs");
+	//plane->transform.position = glm::vec3(0, -2, 0);
+
+
 	
-	RenderComponent* rc = new RenderComponent();
-	block->AddComponent(rc);
 
-	block->transform.position = glm::vec3(5, 0, 0);
-	mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	int count = 7;
+	int spacing = 2;
+	int x = 0;
+	int y = 0;
+	for (int i = 0; i < count; i++)
+	{
+		y = 0;
+		for (int j = 0; j < count; j++)
+		{
+			//GameObject* block = GameObject::Create(this);
+			//ModelComponent* mc = new ModelComponent("Assets/Models/cube2", "cube.obj");
+			//block->AddComponent(mc);
+			//mc->model.AddTexManual("sculptedfloorboards4_basecolor.png", "texture_diffuse", 0);
+			//mc->model.AddTexManual("sculptedfloorboards4_normal.png", "texture_normal", 0);
+			//mc->model.AddTexManual("sculptedfloorboards4_height.png", "texture_height", 0);
+			//mc->model.AddTexManual("sculptedfloorboards4_metalness.png", "texture_metallic", 0);
+			//mc->model.AddTexManual("sculptedfloorboards4_roughness.png", "texture_roughness", 0);
+			//mc->model.AddTexManual("sculptedfloorboards4_AO.png", "texture_ambientocclusion", 0);
 
-	//GameObject* block2 = GameObject::Create(this);
-	//ModelComponent* mc2 = new ModelComponent();
-	//block2->AddComponent(mc2);
+			//RenderComponent* rc = new RenderComponent();
+			//block->AddComponent(rc);
 
-	//RenderComponent* rc2 = new RenderComponent();
-	//block2->AddComponent(rc2);
+			//block->transform.position = glm::vec3(0, y - count - spacing/2, x - count - spacing / 2);
+			//mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
-	//block2->transform.position = glm::vec3(5, 0, 2);
+			GameObject* block = GameObject::Create(this);
+			ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
+			block->AddComponent(mc);
+
+			RenderComponent* rc = new RenderComponent();
+			block->AddComponent(rc);
+
+			block->transform.position = glm::vec3(0, y - count - spacing / 2, x - count - spacing / 2);
+			mc->model.shader = Shader("Assets/Shaders/PBRTest.vs", "Assets/Shaders/PBRTest.fs");
+
+			mc->model.shader.UseShader();
+			mc->model.shader.SetFLoat("tmetallic",	glm::max((1.0f/count) * j, 0.1f));
+			mc->model.shader.SetFLoat("troughness", glm::max((1.0f / count) * i, 0.1f));
+			glUseProgram(0);
+
+			//mc->model.shader.
+			y += spacing;
+		}
+		x += spacing;
+	}
 
 
 
 }
 
-GameSetup::GameSetup()
+GameSetup::GameSetup(Window* window)
 {
+	this->window = window;
 }
 
 

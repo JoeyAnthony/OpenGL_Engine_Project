@@ -54,6 +54,9 @@ void CameraComponent::Update()
 
 	lastmouseposition = Mouse::GetMousePos();
 
+	Window* win = parent->GetSetup()->window;
+
+	//glfwSetCursorPos(win->GetWindow(), win->Width()/2.0, win->Height()/2.0);
 
 	//std::cout << parent->transform.rotation.x << " " << parent->transform.rotation.y << " " << parent->transform.rotation.z << std::endl;
 }

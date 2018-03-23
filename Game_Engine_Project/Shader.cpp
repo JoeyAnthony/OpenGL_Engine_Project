@@ -23,8 +23,12 @@ void Shader::SetFLoat(std::string name, float value)
 
 void Shader::SetVec3(std::string name, glm::vec3 value)
 {
-	GLuint id = glGetUniformLocation(shaderid_, name.c_str());
-	glUniform3f(id, value.x, value.y, value.z);
+	glUniform3f(glGetUniformLocation(shaderid_, name.c_str()), value.x, value.y, value.z);
+}
+
+void Shader::SetVec3Array(std::string name, glm::vec3 v[])
+{
+	//glUniform3fv(glGetUniformLocation(shaderid_, name.c_str()), v->length(), v);
 }
 
 Shader::Shader()

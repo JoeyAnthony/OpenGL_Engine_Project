@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include "GameObject.h"
 
-//#include "Component.h"
+#include "Window.h"
 #include "CameraComponent.h"
 #include "ModelComponent.h"
 #include "RenderComponent.h"
@@ -32,6 +32,11 @@ public:
 	* adds gameobject to the scene list
 	*/
 	GameObject* AddGameObject(GameObject obj);
+
+	/**
+	* Window the GameSetup is being rendered is
+	*/
+	Window* window;
 
 	/**
 	* adds camera or drawable to renderlists
@@ -69,7 +74,7 @@ public:
 
 	void CreateScene();
 
-	GameSetup();
+	GameSetup(Window* window);
 	~GameSetup();
 };
 

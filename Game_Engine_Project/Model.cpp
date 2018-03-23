@@ -29,6 +29,16 @@ void Model::Draw(Shader shader)
 	}
 }
 
+void Model::AddTexManual(std::string texname, std::string typeName, unsigned int meshindex)
+{
+	std::string path = directory + "/" + texname;
+	Texture tex(path);
+	tex.type = typeName;
+
+	loadedTextures.push_back(tex);
+	meshes[meshindex].textures.push_back(tex);
+}
+
 void Model::loadModel(std::string directory, std::string modelname)
 {
 	std::string path = directory +"/"+ modelname;
@@ -157,6 +167,8 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType
 		textures.push_back(texture);
 		loadedTextures.push_back(texture);
 	}
+
+
 
 	return textures;
 }

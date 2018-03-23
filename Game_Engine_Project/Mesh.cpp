@@ -22,6 +22,12 @@ void Mesh::Draw(Shader shader)
 			number = std::to_string(normalNr++);
 		else if (name == "texture_height")
 			number = std::to_string(heightNr++);
+		else if (name == "texture_metallic")
+			number = std::to_string(heightNr++);
+		else if (name == "texture_roughness")
+			number = std::to_string(heightNr++);
+		else if (name == "texture_ambientocclusion")
+			number = std::to_string(heightNr++);
 
 
 		shader.SetInt(name.append(number), i);

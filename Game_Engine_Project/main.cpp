@@ -80,10 +80,12 @@ int main(int argc, char* argv[])
 	glfwSetCursorPosCallback(window.GetWindow(), Mouse::MouseCursorPosCallback);
 	glfwSetCursorEnterCallback(window.GetWindow(), Mouse::MouseEnterCallback);
 
+	//glfwSetInputMode(window.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	glViewport(0, 0, window.Width(), window.Height());
 
 
-	GameSetup setup;
+	GameSetup setup(&window);
 	setup.CreateScene();
 
 
