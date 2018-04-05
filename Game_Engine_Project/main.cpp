@@ -134,7 +134,8 @@ int main(int argc, char* argv[])
 		////render scene
 		////Display(window);
 
-		glClearColor(0.35f, 0.64f, 0.99f, 1.0f);
+		//glClearColor(0.6f, 0.14f, 1.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		setup.Render();

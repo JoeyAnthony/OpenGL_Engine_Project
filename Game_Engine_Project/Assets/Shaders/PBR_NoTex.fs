@@ -11,20 +11,12 @@ in VS_OUT
     vec3 lightColorArray[5];
 } vs_in;
 
-
-//texture samplers
-uniform sampler2D texture_diffuse1;
-uniform sampler2D texture_normal1;
-uniform sampler2D texture_height1;
-uniform sampler2D texture_metallic1;
-uniform sampler2D texture_roughness1;
-uniform sampler2D texture_ambientocclusion1;
-
-uniform float tmetallic;
-uniform float troughness;
+uniform vec3 unidiffuse = vec3(1, 0, 0);
+uniform float unimetallic;
+uniform float uniroughness;
+uniform float uniao = 0.4;
 
 const float PI = 3.14159265359;
-
 
 //ratio of reflected light on a surface
  vec3 frenelSchlick(float cosTheta, vec3 F0)
@@ -77,34 +69,16 @@ void main()
 {
     //texinfo
     //vec3 diffuse = texture_diffuse1;
-    vec3 diffuse = vec3(1, 0, 0);
+    vec3 diffuse = unidiffuse;
 
     vec3 normal = vs_in.tangentNormal;
 
     //float roughness = texture_roughness1;
-    float roughness = troughness;
+    float roughness = uniroughness;
     //float metallic = texture_metallic1;
-    float metallic = tmetallic;
+    float metallic = unimetallic;
     //float ao = texture_ambientocclusion1;
-    float ao = 0.4;
-
-
-
-    // //texinfo
-    // vec3 diffuse = texture2D(texture_diffuse1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).rgb;
-
-    // vec3 normal = normalize(texture2D(texture_normal1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).rgb);
-    // normal = normalize(normal * 2 - 1);
-
-    // float height = texture2D(texture_height1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).x;
-    // float roughness = texture2D(texture_roughness1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).x;
-    // float metallic = texture2D(texture_metallic1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).x;
-    // float ao = texture2D(texture_ambientocclusion1, vec2(vs_in.texCoord.x, 1-vs_in.texCoord.y)).x;
-
-
-
-
-
+    float ao = uniao;
     
     
     //light-out direction(V)
