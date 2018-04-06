@@ -1,5 +1,11 @@
 #include "GameSetup.h"
 
+#include "CameraComponent.h"
+#include "ModelComponent.h"
+#include "RenderComponent.h"
+#include "ControllerComponent.h"
+#include "TestRotation.h"
+
 GameObject* GameSetup::AddGameObject(GameObject obj)
 {
 	uint32_t hash = NewGameObjectNum();
@@ -81,18 +87,6 @@ void GameSetup::CreateScene()
 	
 	CameraComponent* cc = new CameraComponent();
 	camera->AddComponent(cc);
-	
-
-	//GameObject* block = GameObject::Create(this);
-	//ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
-	//block->AddComponent(mc);
-
-
-	//RenderComponent* rc = new RenderComponent();
-	//block->AddComponent(rc);
-
-	//block->transform.position = glm::vec3(0, 0, 0);
-	//mc->model.shader = Shader("Assets/Shaders/PBRTest.vs", "Assets/Shaders/PBRTest.fs");
 
 
 	GameObject* plane = GameObject::Create(this);
@@ -102,72 +96,76 @@ void GameSetup::CreateScene()
 	pm->model.shader = Shader("Assets/Shaders/Phong.vs", "Assets/Shaders/Phong.fs");
 	plane->transform.position = glm::vec3(0, -2, 0);
 
-	GameObject* robot = GameObject::Create(this);
-	ModelComponent* mc = new ModelComponent("Assets/Models/Robot", "model.dae");
-	robot->AddComponent(mc);
-	mc->model.AddTexManual("/textures/default_albedo.jpg", "texture_diffuse", 0);
-	mc->model.AddTexManual("/textures/default_normal.jpg", "texture_normal", 0);
-	//mc->model.AddTexManual("/textures/default_emissive.jpg", "texture_height", 0);
-	mc->model.AddTexManual("/textures/default_metallic.jpg", "texture_metallic", 0);
-	mc->model.AddTexManual("/textures/default_roughness.jpg", "texture_roughness", 0);
-	mc->model.AddTexManual("/textures/default_AO.jpg", "texture_ambientocclusion", 0);
+	//GameObject* robot = GameObject::Create(this);
+	//ModelComponent* mc = new ModelComponent("Assets/Models/Robot", "model.dae");
+	//robot->AddComponent(mc);
+	//mc->model.AddTexManual("/textures/default_albedo.jpg", "texture_diffuse", 0);
+	//mc->model.AddTexManual("/textures/default_normal.jpg", "texture_normal", 0);
+	////mc->model.AddTexManual("/textures/default_emissive.jpg", "texture_height", 0);
+	//mc->model.AddTexManual("/textures/default_metallic.jpg", "texture_metallic", 0);
+	//mc->model.AddTexManual("/textures/default_roughness.jpg", "texture_roughness", 0);
+	//mc->model.AddTexManual("/textures/default_AO.jpg", "texture_ambientocclusion", 0);
 
-	RenderComponent* rc = new RenderComponent();
-	robot->AddComponent(rc);
+	//RenderComponent* rc = new RenderComponent();
+	//robot->AddComponent(rc);
 
-	robot->transform.position = glm::vec3(0, 0, 0);
-	mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	//TestRotation* rotc = new TestRotation();
+	//robot->AddComponent(rotc);
+
+
+	//robot->transform.position = glm::vec3(0, 0, 0);
+	//mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
 
 	
 
-	//int count = 4;
-	//int spacing = 2;
-	//int x = 0;
-	//int y = 0;
-	//for (int i = 0; i < count; i++)
-	//{
-	//	y = 0;
-	//	for (int j = 0; j < count; j++)
-	//	{
-	////		GameObject* block = GameObject::Create(this);
-	////		ModelComponent* mc = new ModelComponent("Assets/Models/cube2", "Sphere.obj");
-	////		block->AddComponent(mc);
-	////		mc->model.AddTexManual("sculptedfloorboards4_basecolor.png", "texture_diffuse", 0);
-	////		mc->model.AddTexManual("sculptedfloorboards4_normal.png", "texture_normal", 0);
-	////		mc->model.AddTexManual("sculptedfloorboards4_height.png", "texture_height", 0);
-	////		mc->model.AddTexManual("sculptedfloorboards4_metalness.png", "texture_metallic", 0);
-	////		mc->model.AddTexManual("sculptedfloorboards4_roughness.png", "texture_roughness", 0);
-	////		mc->model.AddTexManual("sculptedfloorboards4_AO.png", "texture_ambientocclusion", 0);
+	int count = 1;
+	int spacing = 2;
+	int x = 0;
+	int y = 0;
+	for (int i = 0; i < count; i++)
+	{
+		y = 0;
+		for (int j = 0; j < count; j++)
+		{
+			GameObject* block = GameObject::Create(this);
+			ModelComponent* mc = new ModelComponent("Assets/Models/cube2", "Sphere.obj");
+			block->AddComponent(mc);
+			mc->model.AddTexManual("sculptedfloorboards4_basecolor.png", "texture_diffuse", 0);
+			mc->model.AddTexManual("sculptedfloorboards4_normal.png", "texture_normal", 0);
+			mc->model.AddTexManual("sculptedfloorboards4_height.png", "texture_height", 0);
+			mc->model.AddTexManual("sculptedfloorboards4_metalness.png", "texture_metallic", 0);
+			mc->model.AddTexManual("sculptedfloorboards4_roughness.png", "texture_roughness", 0);
+			mc->model.AddTexManual("sculptedfloorboards4_AO.png", "texture_ambientocclusion", 0);
 
-	////		RenderComponent* rc = new RenderComponent();
-	////		block->AddComponent(rc);
+			RenderComponent* rc = new RenderComponent();
+			block->AddComponent(rc);
 
-	////		block->transform.position = glm::vec3(0, 0, 0);
-	////		mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+			block->transform.position = glm::vec3(0, 0, 0);
+			mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
-	//		GameObject* block = GameObject::Create(this);
-	//		ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
-	//		block->AddComponent(mc);
+			//GameObject* block = GameObject::Create(this);
+			//ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
+			//block->AddComponent(mc);
 
-	//		RenderComponent* rc = new RenderComponent();
-	//		block->AddComponent(rc);
+			//RenderComponent* rc = new RenderComponent();
+			//block->AddComponent(rc);
 
-	//		block->transform.position = glm::vec3(0, y - count - spacing / 2, x - count - spacing / 2);
-	//		mc->model.shader = Shader("Assets/Shaders/PBR_NoTex.vs", "Assets/Shaders/PBR_NoTex.fs");
+			//block->transform.position = glm::vec3(x - count / 2 - spacing, y - count / 2 - spacing,0);
+			//mc->model.shader = Shader("Assets/Shaders/PBR_NoTex.vs", "Assets/Shaders/PBR_NoTex.fs");
 
-	//		mc->model.shader.UseShader();
-	//		mc->model.shader.SetVec3("unidiffuse", glm::vec3(1, 0, 0));
-	//		mc->model.shader.SetFLoat("unimetallic", glm::max((1.0f/count) * j, 0.1f));
-	//		//mc->model.shader.SetFLoat("uniao", glm::max((1.0f / count) * j, 0.1f));
-	//		mc->model.shader.SetFLoat("uniroughness", glm::max((1.0f / count) * i, 0.1f));
+			//mc->model.shader.UseShader();
+			//mc->model.shader.SetVec3("unidiffuse", glm::vec3(1, 0, 0));
+			//mc->model.shader.SetFLoat("unimetallic", glm::max((1.0f/count) * j, 0.1f));
+			////mc->model.shader.SetFLoat("uniao", glm::max((1.0f / count) * j, 0.1f));
+			//mc->model.shader.SetFLoat("uniroughness", glm::max((1.0f / count) * i, 0.1f));
 
-	//		glUseProgram(0);
+			glUseProgram(0);
 
-	//		y += spacing;
-	//	}
-	//	x += spacing;
-	//}
+			y += spacing;
+		}
+		x += spacing;
+	}
 
 
 

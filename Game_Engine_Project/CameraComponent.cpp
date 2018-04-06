@@ -8,6 +8,8 @@ void CameraComponent::init(uint32_t id)
 	Component::init(id);
 	parent->GetSetup()->AddDrawable(this);
 	std::cout << "Camerainit" << std::endl;
+
+	projection = glm::perspective(45.0f, ((GLfloat)parent->GetSetup()->window->Width() / (GLfloat)parent->GetSetup()->window->Height()), 0.1f, 100.0f);
 }
 
 void CameraComponent::Update()

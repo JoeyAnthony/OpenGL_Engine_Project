@@ -20,9 +20,8 @@ uniform sampler2D texture_metallic1;
 uniform sampler2D texture_roughness1;
 uniform sampler2D texture_ambientocclusion1;
 
-float gamma = 2.2;
-
 const float PI = 3.14159265359;
+const float gamma = 2.2;
 
 
 //ratio of reflected light on a surface
@@ -104,8 +103,8 @@ void main()
 
 
         //brightness
-        float distance = length(vs_in.lightArray[i] - vs_in.tangentWorldPos);
-        float attenuation = 1.0 /(distance * distance); //TEST FULL ATTENUATION
+        float dist = length(vs_in.lightArray[i] - vs_in.tangentWorldPos);
+        float attenuation = 1.0 /(dist * dist); //TEST FULL ATTENUATION
         vec3 radiance = vs_in.lightColorArray[i] * attenuation; //andere attenuation misschien(meer controle?)
     
         ////Calculating Cook-Torrace specular BRDF////

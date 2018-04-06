@@ -150,6 +150,7 @@
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="TestRotation.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="Vec.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="TestRotation.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="Vec.h" />

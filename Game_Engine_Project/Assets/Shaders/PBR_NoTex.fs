@@ -17,6 +17,7 @@ uniform float uniroughness;
 uniform float uniao = 0.4;
 
 const float PI = 3.14159265359;
+const float gamma = 2.2;
 
 //ratio of reflected light on a surface
  vec3 frenelSchlick(float cosTheta, vec3 F0)
@@ -69,7 +70,7 @@ void main()
 {
     //texinfo
     //vec3 diffuse = texture_diffuse1;
-    vec3 diffuse = unidiffuse;
+    vec3 diffuse = pow(unidiffuse, vec3(gamma));
 
     vec3 normal = vs_in.tangentNormal;
 
@@ -87,7 +88,7 @@ void main()
     //radiance out
     vec3 Lo = vec3(0.0);
     //loop over lights
-    for( int i = 0; i < 3; i++)
+    for( int i = 0; i < 4; i++)
     {
         //light-in direction(L)
         vec3 LiDir = normalize(vs_in.lightArray[i] - vs_in.tangentWorldPos);
@@ -130,6 +131,6 @@ void main()
     vec3 ambient = vec3(0.03) * diffuse * ao;
     vec3 color = ambient + Lo;
 
-    fragcolor = vec4 (color, 1.0);
+    fragcolor = vec4 (pow(color, vec3(1/gamma)), 1.0);
 
 }

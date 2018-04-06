@@ -4,10 +4,9 @@
 #include "GameObject.h"
 
 #include "Window.h"
-#include "CameraComponent.h"
-#include "ModelComponent.h"
-#include "RenderComponent.h"
-#include "ControllerComponent.h"
+
+class CameraComponent;
+class RenderComponent;
 
 struct ObjectContainer
 {

@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 {
 	glfwSetErrorCallback(ErrorCallbak);
 	Window window;
-	window.SetWindowSize(1280, 720);
+	window.SetWindowSize(2560, 1440);
 	window.Hints();
 	window.Start();
 	window.StandardSettings();

@@ -39,16 +39,16 @@ void main()
     mat3 TBN = transpose(mat3(T, B, N));
 
     vs_out.texCoord = texcoord;
-    vs_out.tangentWorldPos = TBN * vec3(modelMatrix * vec4(pos, 0.0));
+    vs_out.tangentWorldPos = TBN * vec3(modelMatrix * vec4(pos, 1.0));
     vs_out.tangentCampos = TBN * camPos;
     vs_out.tangentNormal = TBN * normal;
 
-    vs_out.lightArray[0] = TBN * vec3(modelMatrix * vec4(vec3(2, 0, 0)*2, 0.0));
-    vs_out.lightArray[1] = TBN * vec3(modelMatrix * vec4(vec3(-2, 2, 0)*2, 0.0));
-    vs_out.lightArray[2] = TBN * vec3(modelMatrix * vec4(vec3(-2, 0, 3)*2, 0.0) );
-    vs_out.lightColorArray[0] = vec3(13.47, 20.31, 20.79);
-    vs_out.lightColorArray[1] = vec3(23.47, 11.31, 20.79);
-    vs_out.lightColorArray[2] = vec3(23.47, 21.31, 10.79);
+    vs_out.lightArray[0] = TBN * vec3(-2, 0, 0);
+    vs_out.lightArray[1] = TBN * vec3(0, 2, 0);
+    vs_out.lightArray[2] = TBN * vec3(2, 0, 0);
+    vs_out.lightColorArray[0] = vec3(23.47, 21.31, 20.79);
+    vs_out.lightColorArray[1] = vec3(23.47, 21.31, 20.79);
+    vs_out.lightColorArray[2] = vec3(23.47, 21.31, 20.79);
 
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1);
 }
