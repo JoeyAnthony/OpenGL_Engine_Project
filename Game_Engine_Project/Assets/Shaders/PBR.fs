@@ -94,7 +94,7 @@ void main()
     vec3 Lo = vec3(0.0);
 
     //loop over lights
-    for( int i = 0; i < 3; i++)
+    for( int i = 0; i < 4; i++)
     {
         //light-in direction(L)
         vec3 LiDir = normalize(vs_in.lightArray[i] - vs_in.tangentWorldPos);
@@ -134,7 +134,7 @@ void main()
     }
 
     //improvised ambient for now
-    vec3 ambient = vec3(0.03) * diffuse * ao;
+    vec3 ambient = vec3(0.08) * diffuse * ao;
     vec3 color = ambient + Lo;
 
     fragcolor = vec4 ( pow(color, vec3(1.0/gamma)), 1.0);

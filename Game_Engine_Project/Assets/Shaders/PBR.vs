@@ -43,12 +43,14 @@ void main()
     vs_out.tangentCampos = TBN * camPos;
     vs_out.tangentNormal = TBN * normal;
 
-    vs_out.lightArray[0] = TBN * vec3(-2, 0, 0);
-    vs_out.lightArray[1] = TBN * vec3(0, 2, 0);
-    vs_out.lightArray[2] = TBN * vec3(2, 0, 0);
+    vs_out.lightArray[0] = TBN * vec3(6, 3, -6);
+    vs_out.lightArray[1] = TBN * vec3(6, 3, 6);
+    vs_out.lightArray[2] = TBN * vec3(-6, 3, -6);
+    vs_out.lightArray[3] = TBN * vec3(-6, 3, 6);
     vs_out.lightColorArray[0] = vec3(23.47, 21.31, 20.79);
     vs_out.lightColorArray[1] = vec3(23.47, 21.31, 20.79);
     vs_out.lightColorArray[2] = vec3(23.47, 21.31, 20.79);
+    vs_out.lightColorArray[3] = vec3(23.47, 21.31, 20.79);
 
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1);
 }

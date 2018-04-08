@@ -14,7 +14,7 @@ uniform mat3 normalMatrix;
 //camera position
 uniform vec3 camPos;
 //uniform vec3 lightPos;
-vec3 lightPos = vec3(0, 2, 0); //will be uniform later
+vec3 lightPos = vec3(0, 20, 0); //will be uniform later
 
 //out vars
 //out vec3 fnormal;

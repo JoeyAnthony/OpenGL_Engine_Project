@@ -143,9 +143,9 @@ void ModelComponent::bindTextures()
 
 
 
-ModelComponent::ModelComponent(std::string directory, std::string modelname)
+ModelComponent::ModelComponent(std::string directory, std::string modelname, bool searchMaterial)
 {
-	model = Model(directory, modelname);
+	model = Model(directory, modelname, searchMaterial);
 }
 
 ModelComponent::ModelComponent()
