@@ -10,6 +10,16 @@ Model::Model()
 {
 }
 
+Model::Model(const Model * model)
+{
+	shader = model->shader;
+	directory = model->directory;
+	meshes = model->meshes;
+	loadedTextures = model->loadedTextures;
+	modelBounds = model->modelBounds;
+	searchMaterials = model->searchMaterials;
+}
+
 Model::Model(std::string directory, std::string modelname, bool searchMat)
 {
 	searchMaterials = searchMat;
@@ -40,6 +50,26 @@ void Model::AddTexManual(std::string texname, std::string typeName, unsigned int
 	meshes[meshindex].textures.push_back(tex);
 }
 
+void Model::calcModelBounds()
+{
+	for (int i = 0; i < meshes.size(); i++)
+	{
+		//calculate modelbounds
+		modelBounds.maxBounds.x = glm::max(modelBounds.maxBounds.x, meshes[i].getBounds().maxBounds.x);
+		modelBounds.maxBounds.y = glm::max(modelBounds.maxBounds.y, meshes[i].getBounds().maxBounds.y);
+		modelBounds.maxBounds.z = glm::max(modelBounds.maxBounds.z, meshes[i].getBounds().maxBounds.z);
+
+		modelBounds.minBounds.x = glm::min(modelBounds.minBounds.x, meshes[i].getBounds().minBounds.x);
+		modelBounds.minBounds.y = glm::min(modelBounds.minBounds.y, meshes[i].getBounds().minBounds.y);
+		modelBounds.minBounds.z = glm::min(modelBounds.minBounds.z, meshes[i].getBounds().minBounds.z);
+	}
+}
+
+Bounds Model::getBounds()
+{
+	return modelBounds;
+}
+
 void Model::loadModel(std::string directory, std::string modelname)
 {
 	std::string path = directory +"/"+ modelname;
@@ -67,10 +97,13 @@ void Model::processNode(aiNode * node, const aiScene * scene)
 		meshes.push_back(processMesh(assimpMesh, scene));
 	}
 
+
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene);
 	}
+
+	calcModelBounds();
 }
 
 Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
@@ -78,6 +111,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
+	Bounds meshBounds;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -92,6 +126,15 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 			mesh->mNormals[i].x,
 			mesh->mNormals[i].y,
 			mesh->mNormals[i].z);
+
+		//calculate mesh bounds
+		meshBounds.maxBounds.x = glm::max(meshBounds.maxBounds.x, vert.position.x);
+		meshBounds.maxBounds.y = glm::max(meshBounds.maxBounds.y, vert.position.y);
+		meshBounds.maxBounds.z = glm::max(meshBounds.maxBounds.z, vert.position.z);
+
+		meshBounds.minBounds.x = glm::min(meshBounds.minBounds.x, vert.position.x);
+		meshBounds.minBounds.y = glm::min(meshBounds.minBounds.y, vert.position.y);
+		meshBounds.minBounds.z = glm::min(meshBounds.minBounds.z, vert.position.z);
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -143,7 +186,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 		textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 	}
 
-	return Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures, meshBounds);
 }
 
 std::vector<Texture> Model::searchTexturesInDir()

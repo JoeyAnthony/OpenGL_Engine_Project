@@ -5,6 +5,7 @@
 #include "RenderComponent.h"
 #include "ControllerComponent.h"
 #include "TestRotation.h"
+#include "CollisionComponent.h"
 
 GameObject* GameSetup::AddGameObject(GameObject obj)
 {
@@ -18,7 +19,7 @@ void GameSetup::AddDrawable(RenderComponent * component)
 {
 	if (!component->IsInitialized())
 	{
-		std::cout << "Component not Initialized:" << typeid(component).name() << std::endl;
+		std::cout << "ERROR: Component NOT Initialized:" << typeid(component).name() << std::endl;
 		return;
 	}
 	objectContainer.drawables.insert(std::pair<uint32_t, RenderComponent*>(component->GetID(), component));
@@ -33,6 +34,16 @@ void GameSetup::AddDrawable(CameraComponent * component)
 	}
 	objectContainer.cameras.insert(std::pair<uint32_t, CameraComponent*>(component->GetID(), component));
 }
+
+//void GameSetup::AddDrawable(CollisionComponent * component)
+//{
+//	if (!component->IsInitialized())
+//	{
+//		std::cout << "Component not Initialized:" << typeid(component).name() << std::endl;
+//		return;
+//	}
+//	objectContainer.cameras.insert(std::pair<uint32_t, CollisionComponent*>(component->GetID(), component));
+//}
 
 int GameSetup::NewGameObjectNum()
 {
@@ -85,167 +96,142 @@ void GameSetup::CreateScene()
 {
 	GameObject* camera = GameObject::Create(this);
 	
-	CameraComponent* cc = new CameraComponent();
+	CameraComponent* cc = new CameraComponent(true);
 	camera->AddComponent(cc);
 
-	////Level
-	////floor
-	//glm::vec3 scale = glm::vec3(3, 3, 3);
-	//GameObject* floor1 = GameObject::Create(this);
-	//ModelComponent* pm1 = new ModelComponent("Assets/Levels/Arena/Floor", "sci-fi-floor1.obj", true);
-	//pm1->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//floor1->AddComponent(pm1);
-	//floor1->AddComponent(new RenderComponent());
-	//floor1->transform.scale = scale;
 
-	//GameObject* floor2 = GameObject::Create(this);
-	//ModelComponent* pm2 = new ModelComponent("Assets/Levels/Arena/Floor", "sci-fi-floor2.obj", true);
-	//pm2->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//floor2->AddComponent(pm2);
-	//floor2->AddComponent(new RenderComponent());
-	//floor2->transform.scale = scale;
+	ModelComponent* floorPanel = new ModelComponent("Assets/Levels/ArenaModels/FloorPanel", "FloorPanel.obj", true);
+	floorPanel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
-	//GameObject* floor3 = GameObject::Create(this);
-	//ModelComponent* pm3 = new ModelComponent("Assets/Levels/Arena/Floor", "sci-fi-floor3.obj", true);
-	//pm3->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//floor3->AddComponent(pm3);
-	//floor3->AddComponent(new RenderComponent());
-	//floor3->transform.scale = scale;
+	ModelComponent* largePanel = new ModelComponent("Assets/Levels/ArenaModels/LargePanel", "LargePanel.obj", true);
+	largePanel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
-	//GameObject* floor4 = GameObject::Create(this);
-	//ModelComponent* pm4 = new ModelComponent("Assets/Levels/Arena/Floor", "sci-fi-floor4.obj", true);
-	//pm4->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//floor4->AddComponent(pm4);
-	//floor4->AddComponent(new RenderComponent());
-	//floor4->transform.scale = scale;
+	ModelComponent* jumpPlatform = new ModelComponent("Assets/Levels/ArenaModels/JumpPlatform", "JumpPlatform.obj", true);
+	jumpPlatform->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 
-	////highfloor
-	//GameObject* highfloor = GameObject::Create(this);
-	//ModelComponent* model5 = new ModelComponent("Assets/Levels/Arena/HighFloor", "cementfloor.obj", true);
-	//model5->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//highfloor->AddComponent(model5);
-	//highfloor->AddComponent(new RenderComponent());
-	//highfloor->transform.scale = scale;
+	glm::vec3 scale = glm::vec3(6, 6, 6);
+	int horizontal = 4;
+	int vertical = 6;
+	glm::vec3 floorDistance = (floorPanel->model.getBounds().maxBounds + glm::abs(floorPanel->model.getBounds().minBounds)) * scale;
 
-	////platforms
-	//GameObject* platform1 = GameObject::Create(this);
-	//ModelComponent* model6 = new ModelComponent("Assets/Levels/Arena/Platform", "sci-fi-platform1.obj", true);
-	//model6->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//platform1->AddComponent(model6);
-	//platform1->AddComponent(new RenderComponent());
-	//platform1->transform.scale = scale;
+	for (int i = 0; i <= horizontal; i++)
+	{
 
-	//GameObject* platform2 = GameObject::Create(this);
-	//ModelComponent* model7 = new ModelComponent("Assets/Levels/Arena/Platform", "sci-fi-platform2.obj", true);
-	//model7->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//platform2->AddComponent(model7);
-	//platform2->AddComponent(new RenderComponent());
-	//platform2->transform.scale = scale;
+		for (int j = 0; j <= vertical; j++)
+		{
+			if (i == 0 || i == horizontal || j == 0 || j == vertical)
+			{
+				GameObject* copyFloor = GameObject::Create(this);
+				copyFloor->AddComponent(new ModelComponent(floorPanel));
+				copyFloor->AddComponent(new RenderComponent());
+				copyFloor->AddComponent(new CollisionComponent);
+				copyFloor->transform.scale = scale;
+				copyFloor->transform.position = glm::vec3(floorDistance.x * (i - horizontal/2),
+														0, 
+														floorDistance.z * (j - vertical / 2) );
+			}
+		}
 
-	//GameObject* platform3 = GameObject::Create(this);
-	//ModelComponent* model8 = new ModelComponent("Assets/Levels/Arena/Platform", "sci-fi-platform3.obj", true);
-	//model8->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//platform3->AddComponent(model8);
-	//platform3->AddComponent(new RenderComponent());
-	//platform3->transform.scale = scale;
+	}
 
-	//GameObject* platform4 = GameObject::Create(this);
-	//ModelComponent* model9 = new ModelComponent("Assets/Levels/Arena/Platform", "sci-fi-platform4.obj", true);
-	//model9->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//platform4->AddComponent(model9);
-	//platform4->AddComponent(new RenderComponent());
-	//platform4->transform.scale = scale;
+	GameObject* largeP = GameObject::Create(this);
+	largeP->AddComponent(largePanel);
+	largeP->AddComponent(new RenderComponent());
+	largeP->AddComponent(new CollisionComponent);
+	largeP->transform.scale = scale;
+	largeP->transform.position = glm::vec3(0, 16, 0);
+	largeP->transform.rotation = glm::vec3(0, 90, 0);
 
-	////walls
-	//GameObject* wall1 = GameObject::Create(this);
-	//ModelComponent* model10 = new ModelComponent("Assets/Levels/Arena/Wall", "sci-fi-wall1.obj", true);
-	//model10->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//wall1->AddComponent(model10);
-	//wall1->AddComponent(new RenderComponent());
-	//wall1->transform.scale = scale;
+	glm::vec3 jumpplatDistance = (largePanel->model.getBounds().maxBounds + jumpPlatform->model.getBounds().maxBounds) * scale;
 
-	//GameObject* wall2 = GameObject::Create(this);
-	//ModelComponent* model11 = new ModelComponent("Assets/Levels/Arena/Wall", "sci-fi-wall2.obj", true);
-	//model11->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//wall2->AddComponent(model11);
-	//wall2->AddComponent(new RenderComponent());
-	//wall2->transform.scale = scale;
+	GameObject* jumpPlat1 = GameObject::Create(this);
+	jumpPlat1->AddComponent(jumpPlatform);
+	jumpPlat1->AddComponent(new RenderComponent());
+	jumpPlat1->AddComponent(new CollisionComponent);
+	jumpPlat1->transform.scale = scale;
+	jumpPlat1->transform.position = glm::vec3(jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z/1.5);
 
-	//GameObject* wall3 = GameObject::Create(this);
-	//ModelComponent* model12 = new ModelComponent("Assets/Levels/Arena/Wall", "sci-fi-wall3.obj", true);
-	//model12->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//wall3->AddComponent(model12);
-	//wall3->AddComponent(new RenderComponent());
-	//wall3->transform.scale = scale;
+	GameObject* jumpPlat2 = GameObject::Create(this);
+	jumpPlat2->AddComponent(jumpPlatform);
+	jumpPlat2->AddComponent(new RenderComponent());
+	jumpPlat2->AddComponent(new CollisionComponent);
+	jumpPlat2->transform.scale = scale;
+	jumpPlat2->transform.position = glm::vec3(jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / -1.5);
 
-	//GameObject* wall4 = GameObject::Create(this);
-	//ModelComponent* model13 = new ModelComponent("Assets/Levels/Arena/Wall", "sci-fi-wall4.obj", true);
-	//model13->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
-	//wall4->AddComponent(model13);
-	//wall4->AddComponent(new RenderComponent());
-	//wall4->transform.scale = scale;
+	GameObject* jumpPlat3 = GameObject::Create(this);
+	jumpPlat3->AddComponent(jumpPlatform);
+	jumpPlat3->AddComponent(new RenderComponent());
+	jumpPlat3->AddComponent(new CollisionComponent);
+	jumpPlat3->transform.scale = scale;
+	jumpPlat3->transform.position = glm::vec3(-jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / 1.5);
 
-	////robot
-	//GameObject* robot = GameObject::Create(this);
-	//ModelComponent* mc = new ModelComponent("Assets/Models/Robot", "model.dae", true);
-	//robot->AddComponent(mc);
-	//RenderComponent* rc = new RenderComponent();
-	//robot->AddComponent(rc);
-	//TestRotation* rotc = new TestRotation();
-	//robot->AddComponent(rotc);
-	//robot->transform.position = glm::vec3(0, 0, 0);
-	//mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	GameObject* jumpPlat4 = GameObject::Create(this);
+	jumpPlat4->AddComponent(jumpPlatform);
+	jumpPlat4->AddComponent(new RenderComponent());
+	jumpPlat4->AddComponent(new CollisionComponent);
+	jumpPlat4->transform.scale = scale;
+	jumpPlat4->transform.position = glm::vec3(-jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / -1.5);
+
+	GameObject* jumpPlatCenter = GameObject::Create(this);
+	jumpPlatCenter->AddComponent(jumpPlatform);
+	jumpPlatCenter->AddComponent(new RenderComponent());
+	jumpPlatCenter->AddComponent(new CollisionComponent);
+	jumpPlatCenter->transform.scale = scale;
+	
+
 
 	////railgun
-	//GameObject* robot = GameObject::Create(this);
-	//ModelComponent* mc = new ModelComponent("Assets/Models/railgun", "railgun.obj");
-	//robot->AddComponent(mc);
-	//RenderComponent* rc = new RenderComponent();
-	//robot->AddComponent(rc);
-	//TestRotation* rotc = new TestRotation();
-	//robot->AddComponent(rotc);
-	//robot->transform.position = glm::vec3(0, 0, 0);
-	//mc->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	//GameObject* railgun = GameObject::Create(this);
+	//ModelComponent* gunmodel = new ModelComponent("Assets/Models/railgun", "railgun.obj");
+	//railgun->AddComponent(gunmodel);
+	//RenderComponent* gunr = new RenderComponent();
+	//railgun->AddComponent(gunr);
+	//TestRotation* rotc2 = new TestRotation();
+	//railgun->AddComponent(rotc2);
+	//railgun->transform.position = glm::vec3(3, 0, 0);
+	//railgun->transform.scale = glm::vec3(0.2, 0.2, 0.2);
+	//gunmodel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	//railgun->AddComponent(new CollisionComponent);
 
 	//GameObject* plane = GameObject::Create(this);
 	//ModelComponent* planemodel = new ModelComponent("Assets/Models/Plane", "Plane.obj", true);
 	//planemodel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 	//plane->AddComponent(planemodel);
 	//plane->AddComponent(new RenderComponent());
-	//plane->transform.position = glm::vec3(0, -5, 0);
+	//plane->transform.scale = glm::vec3(.5, .5, .5);
 
-	int count = 8;
-	int spacing = 2;
-	int x = 0;
-	int y = 0;
-	for (int i = 0; i < count; i++)
-	{
-		y = 0;
-		for (int j = 0; j < count; j++)
-		{
+	//int count = 8;
+	//int spacing = 2;
+	//int x = 0;
+	//int y = 0;
+	//for (int i = 0; i < count; i++)
+	//{
+	//	y = 0;
+	//	for (int j = 0; j < count; j++)
+	//	{
 
-			GameObject* block = GameObject::Create(this);
-			ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
-			block->AddComponent(mc);
+	//		GameObject* block = GameObject::Create(this);
+	//		ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
+	//		block->AddComponent(mc);
 
-			RenderComponent* rc = new RenderComponent();
-			block->AddComponent(rc);
+	//		RenderComponent* rc = new RenderComponent();
+	//		block->AddComponent(rc);
 
-			block->transform.position = glm::vec3(x - count / 2 - spacing, y - count / 2 - spacing,0);
-			mc->model.shader = Shader("Assets/Shaders/PBR_NoTex.vs", "Assets/Shaders/PBR_NoTex.fs");
+	//		block->transform.position = glm::vec3(x - count / 2 - spacing, y - count / 2 - spacing,-5);
+	//		mc->model.shader = Shader("Assets/Shaders/PBR_NoTex.vs", "Assets/Shaders/PBR_NoTex.fs");
 
-			mc->model.shader.UseShader();
-			mc->model.shader.SetVec3("unidiffuse", glm::vec3(1, 0, 0));
-			mc->model.shader.SetFLoat("unimetallic", glm::max((1.0f/count) * j, 0.1f));
-			//mc->model.shader.SetFLoat("uniao", glm::max((1.0f / count) * j, 0.1f));
-			mc->model.shader.SetFLoat("uniroughness", glm::max((1.0f / count) * i, 0.1f));
+	//		mc->model.shader.UseShader();
+	//		mc->model.shader.SetVec3("unidiffuse", glm::vec3(1, 0, 0));
+	//		mc->model.shader.SetFLoat("unimetallic", glm::max((1.0f/count) * j, 0.1f));
+	//		//mc->model.shader.SetFLoat("uniao", glm::max((1.0f / count) * j, 0.1f));
+	//		mc->model.shader.SetFLoat("uniroughness", glm::max((1.0f / count) * i, 0.1f));
 
-			glUseProgram(0);
+	//		glUseProgram(0);
 
-			y += spacing;
-		}
-		x += spacing;
-	}
+	//		y += spacing;
+	//	}
+	//	x += spacing;
+	//}
 
 
 

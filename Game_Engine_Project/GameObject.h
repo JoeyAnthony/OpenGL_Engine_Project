@@ -15,6 +15,18 @@
 class Component;
 class GameSetup;
 
+struct Transform
+{
+	//tranformations
+	glm::vec3 position = glm::vec3(0, 0, 0);
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 scale = glm::vec3(1, 1, 1);
+
+	glm::vec3 forward = glm::vec3(0, 0, 0);
+	glm::vec3 right = glm::vec3(0, 0, 0);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+};
+
 class GameObject
 {
 private:
@@ -54,17 +66,7 @@ private:
 protected:
 
 public:
-	struct Transform
-	{
-		//tranformations
-		glm::vec3 position = glm::vec3(0, 0, 0);
-		glm::vec3 rotation = glm::vec3(0, 0, 0);
-		glm::vec3 scale = glm::vec3(1, 1, 1);
 
-		glm::vec3 forward = glm::vec3(0, 0, 0);
-		glm::vec3 right = glm::vec3(0, 0, 0);
-		glm::vec3 up = glm::vec3(0, 1, 0);
-	};
 	Transform transform;
 
 	/**

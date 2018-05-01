@@ -13,7 +13,7 @@ void RenderComponent::Render(CameraComponent* camera)
 	//modelinfo->bindTextures();
 
 	//update? or render? Render: because interpolation should be applied
-	glm::mat4 model;
+	model = glm::mat4();
 
 	//first scale, then rotate last translate. read from right to left so it is:
 	//translate, rotate, scale. most right matrix is multiplied first with the vector

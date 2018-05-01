@@ -27,6 +27,11 @@ private:
 	int NewGameObjectNum();
 
 public:
+	/*
+	* maincam ID
+	*/
+	uint32_t mainCamID;
+
 	/**
 	* adds gameobject to the scene list
 	*/
@@ -42,6 +47,7 @@ public:
 	*/
 	void AddDrawable(RenderComponent* component);
 	void AddDrawable(CameraComponent* component);
+	//void AddDrawable(CollisionComponent * component);
 
 	void Destroy();
 

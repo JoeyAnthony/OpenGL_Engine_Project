@@ -2,11 +2,14 @@
 #include "GameSetup.h"
 
 glm::vec2 lastmouseposition;
+bool mouseMoved = false;
 
 void CameraComponent::init(uint32_t id)
 {
 	Component::init(id);
 	parent->GetSetup()->AddDrawable(this);
+	if (ismaincam)
+		parent->GetSetup()->mainCamID = GetID();
 	std::cout << "Camerainit" << std::endl;
 
 	projection = glm::perspective(45.0f, ((GLfloat)parent->GetSetup()->window->Width() / (GLfloat)parent->GetSetup()->window->Height()), 0.1f, 1000.0f);
@@ -36,8 +39,21 @@ void CameraComponent::Update()
 		parent->transform.position -= (glm::normalize(parent->transform.up) * speed) * Tools::DeltaTime();
 
 
-	parent->transform.rotation.x += (lastmouseposition.y - Mouse::GetMousePos().y) * sensitivity;
-	parent->transform.rotation.y += (Mouse::GetMousePos().x - lastmouseposition.x) * sensitivity;
+	//mouse input
+
+	//lastmouseposition = Mouse::GetMousePos();
+
+	Window* win = parent->GetSetup()->window;
+	glm::vec2 moved = Mouse::GetMousePos() - glm::vec2(win->Width() / 2.0, win->Height() / 2.0);
+	//parent->transform.rotation.x += (lastmouseposition.y - Mouse::GetMousePos().y) * sensitivity;
+	//parent->transform.rotation.y += (Mouse::GetMousePos().x - lastmouseposition.x) * sensitivity;
+
+	parent->transform.rotation.x += -moved.y * sensitivity;
+	parent->transform.rotation.y += moved.x * sensitivity;
+
+
+	//mouseMoved = false;
+	glfwSetCursorPos(win->GetWindow(), win->Width() / 2.0, win->Height() / 2.0);
 
 	//std::cout << "rot: " << pitch << " " <<yaw << std::endl;
 	//std::cout << "offset: " << mouseoffset.x << " " << mouseoffset.y  << std::endl;
@@ -53,14 +69,6 @@ void CameraComponent::Update()
 	front.y = sin(glm::radians(parent->transform.rotation.x));
 	front.z = cos(glm::radians(parent->transform.rotation.x)) * sin(glm::radians(parent->transform.rotation.y));
 	parent->transform.forward = glm::normalize(front);
-
-	lastmouseposition = Mouse::GetMousePos();
-
-	Window* win = parent->GetSetup()->window;
-
-	//glfwSetCursorPos(win->GetWindow(), win->Width()/2.0, win->Height()/2.0);
-
-	//std::cout << parent->transform.rotation.x << " " << parent->transform.rotation.y << " " << parent->transform.rotation.z << std::endl;
 }
 
 void CameraComponent::LateUpdate() 
@@ -73,9 +81,10 @@ void CameraComponent::Render()
 	view = glm::lookAt(parent->transform.position, parent->transform.position + parent->transform.forward, glm::vec3(0, 1, 0));
 }
 
-CameraComponent::CameraComponent()
+CameraComponent::CameraComponent(bool ismaincam)
 {
 	lastmouseposition = Mouse::GetMousePos();
+	this->ismaincam = ismaincam;
 }
 
 CameraComponent::~CameraComponent()

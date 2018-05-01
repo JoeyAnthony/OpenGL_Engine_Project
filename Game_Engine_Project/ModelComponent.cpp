@@ -148,6 +148,11 @@ ModelComponent::ModelComponent(std::string directory, std::string modelname, boo
 	model = Model(directory, modelname, searchMaterial);
 }
 
+ModelComponent::ModelComponent(const ModelComponent * m)
+{
+	model = Model(m->model);
+}
+
 ModelComponent::ModelComponent()
 {
 

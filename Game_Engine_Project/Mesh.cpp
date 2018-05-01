@@ -40,11 +40,26 @@ void Mesh::Draw(Shader shader)
 	glBindVertexArray(0);
 }
 
+Bounds Mesh::getBounds()
+{
+	return bounds;
+}
+
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
+
+	setupMesh();
+}
+
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, Bounds bounds)
+{
+	this->vertices = vertices;
+	this->indices = indices;
+	this->textures = textures;
+	this->bounds = bounds;
 
 	setupMesh();
 }

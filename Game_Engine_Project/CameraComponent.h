@@ -7,7 +7,8 @@ class CameraComponent : public Component
 {
 public:
 	float speed = 5.0f;
-	float sensitivity = 0.3f;
+	float sensitivity = 0.25f;
+	bool ismaincam = false;
 
 	void init(uint32_t id) override;
 	void Update() override;
@@ -17,7 +18,7 @@ public:
 	glm::mat4 view;
 	glm::mat4 projection;
 
-	CameraComponent();
+	CameraComponent(bool ismaincam = false);
 	~CameraComponent();
 };
 

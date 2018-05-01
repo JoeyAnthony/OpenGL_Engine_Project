@@ -41,7 +41,7 @@ void main()
     vs_out.texCoord = texcoord;
     vs_out.tangentWorldPos = TBN * vec3(modelMatrix * vec4(pos, 1.0));
     vs_out.tangentCampos = TBN * camPos;
-    vs_out.tangentNormal = TBN * normal;
+    vs_out.tangentNormal = TBN * (normal);
 
     vs_out.lightArray[0] = TBN * vec3(-2, 2, -6)*2;
     vs_out.lightArray[1] = TBN * vec3(2, 2, -6)*2;

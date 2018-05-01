@@ -38,6 +38,7 @@ public:
 public:
 
 	ModelComponent(std::string directory, std::string modelname, bool searchMaterial = false);
+	ModelComponent(const ModelComponent* model);
 	ModelComponent();
 	~ModelComponent(void);
 };

@@ -14,8 +14,9 @@ private:
 public:
 	ModelComponent* modelinfo;
 	bool hasmodelinfo = false;
+	glm::mat4 model;
 
-	void Render(CameraComponent* camera);
+	virtual void Render(CameraComponent* camera);
 	void init(uint32_t id) override;
 
 	RenderComponent();
