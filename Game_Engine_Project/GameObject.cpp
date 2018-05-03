@@ -93,6 +93,11 @@ GameSetup* GameObject::GetSetup()
 	return ParentSetup;
 }
 
+uint32_t GameObject::GetID()
+{
+	return ID;
+}
+
 const bool GameObject::IsInitialized()
 {
 	return Initialized;

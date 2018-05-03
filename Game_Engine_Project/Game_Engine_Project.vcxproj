@@ -140,6 +140,8 @@
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ControllerComponent.cpp" />
+    <ClCompile Include="FreeCam.cpp" />
+    <ClCompile Include="GameCam.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="LineRenderer.cpp" />
@@ -165,6 +167,8 @@
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ControllerComponent.h" />
+    <ClInclude Include="FreeCam.h" />
+    <ClInclude Include="GameCam.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="Input.h" />

@@ -1,0 +1,32 @@
+	int count = 8;
+	int spacing = 2;
+	int x = 0;
+	int y = 0;
+	for (int i = 0; i < count; i++)
+	{
+		y = 0;
+		for (int j = 0; j < count; j++)
+		{
+
+			GameObject* block = GameObject::Create(this);
+			ModelComponent* mc = new ModelComponent("Assets/Models/Sphere", "Sphere.obj");
+			block->AddComponent(mc);
+
+			RenderComponent* rc = new RenderComponent();
+			block->AddComponent(rc);
+
+			block->transform.position = glm::vec3(x - count / 2 - spacing, y - count / 2 - spacing,-5);
+			mc->model.shader = Shader("Assets/Shaders/PBR_NoTex.vs", "Assets/Shaders/PBR_NoTex.fs");
+
+			mc->model.shader.UseShader();
+			mc->model.shader.SetVec3("unidiffuse", glm::vec3(1, 0, 0));
+			mc->model.shader.SetFLoat("unimetallic", glm::max((1.0f/count) * j, 0.1f));
+			//mc->model.shader.SetFLoat("uniao", glm::max((1.0f / count) * j, 0.1f));
+			mc->model.shader.SetFLoat("uniroughness", glm::max((1.0f / count) * i, 0.1f));
+
+			glUseProgram(0);
+
+			y += spacing;
+		}
+		x += spacing;
+	}

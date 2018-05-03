@@ -8,6 +8,7 @@
 class CameraComponent;
 class RenderComponent;
 
+
 struct ObjectContainer
 {
 	std::unordered_map<uint32_t, GameObject> MasterGameObjectList;

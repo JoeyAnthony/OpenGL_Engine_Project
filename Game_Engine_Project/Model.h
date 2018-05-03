@@ -9,6 +9,7 @@
 
 #include "Mesh.h"
 #include "Shader.h"
+#include "GameObject.h"
 
 class Model
 {
@@ -34,15 +35,17 @@ public:
 
 	/*
 	* Returns bounds of ALL meshes
+	* Or get them with the transform position added
 	*/
 	Bounds getBounds();
 	Model();
 	Model(const Model* model);
-	Model(std::string directory, std::string modelname, bool searchMat = false);
+	Model(std::string directory, std::string modelname, GameObject* parent, bool searchMat = false);
 	~Model();
 
 private:
 	//data
+	GameObject* parent;
 	std::string directory;
 	std::vector<Mesh> meshes;
 	std::vector<Texture> loadedTextures;

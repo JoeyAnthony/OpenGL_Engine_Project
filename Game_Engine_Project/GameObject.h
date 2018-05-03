@@ -43,11 +43,6 @@ private:
 	GameSetup* ParentSetup;
 
 	/*
-	* Unique ID of this GameObject
-	*/
-	uint32_t ID;
-
-	/*
 	* component number, used in NewComponentNum
 	*/
 	uint32_t ComponentCount = 0;
@@ -66,6 +61,10 @@ private:
 protected:
 
 public:
+	/*
+	* Unique ID of this GameObject
+	*/
+	uint32_t ID;
 
 	Transform transform;
 
@@ -140,6 +139,11 @@ public:
 	* Returns the setup that holds this GameObject
 	*/
 	 GameSetup* GetSetup();
+
+	 /**
+	 * Returns the ID
+	 */
+	 uint32_t GetID();
 
 	 /**
 	 * Returns initialized bool

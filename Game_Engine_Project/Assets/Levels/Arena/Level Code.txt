@@ -1,0 +1,89 @@
+GameObject* camera = GameObject::Create(this);
+	camera->name = "mainCam";
+	
+	CameraComponent* cc = new CameraComponent(true);
+	camera->AddComponent(cc);
+
+	CollisionComponent* col = new CollisionComponent();
+	col->isStatic = false;
+	camera->AddComponent(col);
+
+
+	ModelComponent* floorPanel = new ModelComponent("Assets/Levels/ArenaModels/FloorPanel", "FloorPanel.obj", true);
+	floorPanel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+
+	ModelComponent* largePanel = new ModelComponent("Assets/Levels/ArenaModels/LargePanel", "LargePanel.obj", true);
+	largePanel->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+
+	ModelComponent* jumpPlatform = new ModelComponent("Assets/Levels/ArenaModels/JumpPlatform", "JumpPlatform.obj", true);
+	jumpPlatform->model.shader = Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+
+	glm::vec3 scale = glm::vec3(6, 6, 6);
+	int horizontal = 4;
+	int vertical = 6;
+	glm::vec3 floorDistance = (floorPanel->model.getBounds().maxBounds + glm::abs(floorPanel->model.getBounds().minBounds)) * scale;
+
+	for (int i = 0; i <= horizontal; i++)
+	{
+
+		for (int j = 0; j <= vertical; j++)
+		{
+			if (i == 0 || i == horizontal || j == 0 || j == vertical)
+			{
+				GameObject* copyFloor = GameObject::Create(this);
+				copyFloor->AddComponent(new ModelComponent(floorPanel));
+				copyFloor->AddComponent(new RenderComponent());
+				copyFloor->AddComponent(new CollisionComponent);
+				copyFloor->transform.scale = scale;
+				copyFloor->transform.position = glm::vec3(floorDistance.x * (i - horizontal/2),
+														0, 
+														floorDistance.z * (j - vertical / 2) );
+			}
+		}
+
+	}
+
+	GameObject* largeP = GameObject::Create(this);
+	largeP->AddComponent(largePanel);
+	largeP->AddComponent(new RenderComponent());
+	largeP->AddComponent(new CollisionComponent);
+	largeP->transform.scale = scale;
+	largeP->transform.position = glm::vec3(0, 16, 0);
+	largeP->transform.rotation = glm::vec3(0, 90, 0);
+
+	glm::vec3 jumpplatDistance = (largePanel->model.getBounds().maxBounds + jumpPlatform->model.getBounds().maxBounds) * scale;
+
+	GameObject* jumpPlat1 = GameObject::Create(this);
+	jumpPlat1->AddComponent(jumpPlatform);
+	jumpPlat1->AddComponent(new RenderComponent());
+	jumpPlat1->AddComponent(new CollisionComponent);
+	jumpPlat1->transform.scale = scale;
+	jumpPlat1->transform.position = glm::vec3(jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z/1.5);
+
+	GameObject* jumpPlat2 = GameObject::Create(this);
+	jumpPlat2->AddComponent(jumpPlatform);
+	jumpPlat2->AddComponent(new RenderComponent());
+	jumpPlat2->AddComponent(new CollisionComponent);
+	jumpPlat2->transform.scale = scale;
+	jumpPlat2->transform.position = glm::vec3(jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / -1.5);
+
+	GameObject* jumpPlat3 = GameObject::Create(this);
+	jumpPlat3->AddComponent(jumpPlatform);
+	jumpPlat3->AddComponent(new RenderComponent());
+	jumpPlat3->AddComponent(new CollisionComponent);
+	jumpPlat3->transform.scale = scale;
+	jumpPlat3->transform.position = glm::vec3(-jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / 1.5);
+
+	GameObject* jumpPlat4 = GameObject::Create(this);
+	jumpPlat4->AddComponent(jumpPlatform);
+	jumpPlat4->AddComponent(new RenderComponent());
+	jumpPlat4->AddComponent(new CollisionComponent);
+	jumpPlat4->transform.scale = scale;
+	jumpPlat4->transform.position = glm::vec3(-jumpplatDistance.x, largeP->transform.position.y / 2, jumpplatDistance.z / -1.5);
+
+	GameObject* jumpPlatCenter = GameObject::Create(this);
+	jumpPlatCenter->AddComponent(jumpPlatform);
+	jumpPlatCenter->AddComponent(new RenderComponent());
+	jumpPlatCenter->AddComponent(new CollisionComponent);
+	jumpPlatCenter->transform.scale = scale;
+	

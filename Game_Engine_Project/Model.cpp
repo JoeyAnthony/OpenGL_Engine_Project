@@ -20,10 +20,11 @@ Model::Model(const Model * model)
 	searchMaterials = model->searchMaterials;
 }
 
-Model::Model(std::string directory, std::string modelname, bool searchMat)
+Model::Model(std::string directory, std::string modelname, GameObject* parent, bool searchMat)
 {
 	searchMaterials = searchMat;
 	loadModel(directory, modelname);
+	this->parent = parent;
 	initModel();
 }
 
