@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
@@ -151,9 +152,10 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="PlayerInput.cpp" />
+    <ClCompile Include="ProjectileCannon.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="TestRotation.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tools.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
@@ -176,9 +179,10 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelComponent.h" />
+    <ClInclude Include="PlayerInput.h" />
+    <ClInclude Include="ProjectileCannon.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="TestRotation.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tools.h" />

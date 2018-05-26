@@ -40,6 +40,7 @@ public:
 	virtual void FixedUpdate();
 	//virtual void Render();
 	virtual void init(uint32_t id);
+	virtual void freeData();
 
 	Component();
 };

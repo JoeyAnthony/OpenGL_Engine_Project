@@ -134,7 +134,12 @@ LineRenderer::LineRenderer()
 
 LineRenderer::~LineRenderer()
 {
+	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &VAO);
+	shader.destroy();
+
 }
+
 
 void LineRenderer::createBuffers(glm::vec3 * array)
 {

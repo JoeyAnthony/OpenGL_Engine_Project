@@ -14,6 +14,7 @@ struct ObjectContainer
 	std::unordered_map<uint32_t, GameObject> MasterGameObjectList;
 	std::unordered_map<uint32_t, CameraComponent*> cameras;
 	std::unordered_map<uint32_t, RenderComponent*> drawables;
+	std::unordered_map<uint32_t, GameObject*> markedForDeletion;
 };
 
 class GameSetup
@@ -50,8 +51,6 @@ public:
 	void AddDrawable(CameraComponent* component);
 	//void AddDrawable(CollisionComponent * component);
 
-	void Destroy();
-
 	/**
 	* calls Update in every object in the current scene
 	*/
@@ -71,6 +70,11 @@ public:
 	* Render all GameObjects with a renderer
 	*/
 	void Render();
+
+	/**
+	* Remove marked objects
+	*/
+	void DeleteMarkedObjects();
 
 	/**
 	* Returns the objectcontainer

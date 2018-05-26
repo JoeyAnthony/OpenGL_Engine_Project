@@ -11,6 +11,7 @@ public:
 	void Update() override;
 	void LateUpdate() override;
 	void Render();
+	void freeData() override;
 
 	glm::mat4 view;
 	glm::mat4 projection;

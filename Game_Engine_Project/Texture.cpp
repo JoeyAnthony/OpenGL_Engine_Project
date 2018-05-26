@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Tools.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -41,11 +42,11 @@ void Texture::LoadTexture(const std::string & path)
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		stbi_image_free(imgData);
-		std::cout << "has texture" << std::endl;
+		Debug("has texture" << std::endl);
 	}
 	else
 	{
-		std::cout << "no image" << std::endl;
+		Debug("no image" << std::endl);
 	}
 	Unbind();
 }
@@ -58,6 +59,11 @@ void Texture::Bind()
 void Texture::Unbind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::freeData()
+{
+	//glDeleteTextures(1, &texid);
 }
 
 
@@ -86,4 +92,5 @@ Texture::Texture()
 
 Texture::~Texture()
 {
+	
 }

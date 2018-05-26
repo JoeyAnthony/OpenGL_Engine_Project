@@ -25,18 +25,21 @@ struct Transform
 	glm::vec3 forward = glm::vec3(0, 0, 0);
 	glm::vec3 right = glm::vec3(0, 0, 0);
 	glm::vec3 up = glm::vec3(0, 1, 0);
+
+	glm::mat4 modelMatrix;
 };
 
 class GameObject
 {
 private:
+
+	friend GameSetup;
 	/**
 	* list of all components in this gameobject
 	might change it to unordered map
 	*/
 	std::vector<Component*> ComponentList;
 
-	
 	/**
 	* Gamesetup that owns this GameObject 
 	*/
@@ -57,8 +60,14 @@ private:
 	*/
 	bool Initialized = false;
 
+	/**
+	* deallocates all components, only called from gamesetup
+	*/
+	void DeallocateComponents();
+
 
 protected:
+
 
 public:
 	/*
@@ -87,16 +96,23 @@ public:
 	*/
 	static GameObject* Create(GameSetup *game);
 
+	/*
+	* Deletes and deallocates gameobject and averything in it
+	*/
+	void Destroy();
+
+	void setForward(glm::vec3 dir);
+
 	/**
 	*
 	*/
 	void AddComponent(Component* component);
 
 	/**
-	* garbage collector : mark object for deletion.wil later be deleted
-	* also delete rendercomponent here
+	* Delete component
+	* 
 	*/
-	//void DeleteComponent();
+	void DeleteComponent();
 
 	/**
 	* search for a component in the corresponding gameobject with the same ID
@@ -114,6 +130,11 @@ public:
 
 		return nullptr;
 	}
+
+	/*
+	* Updates right and forward vector
+	*/
+	void UpdateTransform();
 
 	/**
 	*update this gameobject all components

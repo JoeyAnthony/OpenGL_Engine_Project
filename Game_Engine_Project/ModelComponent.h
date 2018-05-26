@@ -30,7 +30,7 @@ public:
 	GLuint VBO;
 	GLuint EBO;
 
-	void init(uint32_t id) override;
+	//void init(uint32_t id) override;
 	void addShader(std::string vs, std::string fs);
 	void addTexture(std::string uniformName, std::string path);
 	void bindTextures();
@@ -38,7 +38,7 @@ public:
 public:
 
 	ModelComponent(std::string directory, std::string modelname, bool searchMaterial = false);
-	ModelComponent(const ModelComponent* model);
+	//ModelComponent(const ModelComponent* model);
 	ModelComponent();
 	~ModelComponent(void);
 };

@@ -18,6 +18,7 @@ public:
 	void LoadTexture(const std::string &fileName);
 	void Bind();
 	void Unbind();
+	void freeData();
 
 	Texture();
 	Texture(const Texture &tex);

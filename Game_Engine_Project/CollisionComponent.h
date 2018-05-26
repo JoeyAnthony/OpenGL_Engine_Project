@@ -14,7 +14,7 @@ public:
 		glm::vec3 normal;
 	};
 
-	LineRenderer lines;
+	LineRenderer* lines;
 	bool isStatic = true;
 	ModelComponent* modelcmp;
 	Bounds bounds;
@@ -27,6 +27,7 @@ public:
 	glm::vec3 largestInVec(glm::vec3 vec);
 	bool checkCollision( glm::vec3& push);
 	bool collide(Bounds obounds, Bounds mbounds);
+	void freeData() override;
 	
 	CollisionComponent();
 	~CollisionComponent();

@@ -60,6 +60,8 @@ private:
 
 	void loadModel(std::string directory, std::string modelname);
 
+	void freeData();
+
 	//Assimp
 	void processNode(aiNode *node, const aiScene *scene);
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene);

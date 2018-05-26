@@ -14,6 +14,13 @@ void Window::SetWindowSize(GLuint w, GLuint h)
 	}
 }
 
+void Window::Resize(GLFWwindow * window, int width, int height)
+{
+
+}
+
+
+
 void Window::Hints()
 {
 	//windows hints, set before opening a window
@@ -29,7 +36,7 @@ void Window::Start()
 	//initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		Debug("Failed to initialize GLAD" << std::endl);
 		//return -1;
 	}
 }

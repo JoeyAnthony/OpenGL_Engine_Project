@@ -6,7 +6,10 @@
 
 void CollisionComponent::Render(CameraComponent * cam)
 {
-	lines.Draw(cam);
+#ifdef _DEBUG
+	if(Tools::debug)
+		lines->Draw(cam);
+#endif // DEBUG
 }
 
 void CollisionComponent::init(uint32_t id)
@@ -20,7 +23,11 @@ void CollisionComponent::init(uint32_t id)
 		bounds.minBounds = glm::vec3(-0.5, -0.5, -0.5);
 	}
 
-	lines = bounds;
+#ifdef _DEBUG
+	if(Tools::debug)
+		lines = new LineRenderer(bounds);
+#endif // DEBUG
+
 	Component::init(id);
 	parent->GetSetup()->AddDrawable(this);
 }
@@ -34,7 +41,11 @@ void CollisionComponent::Update()
 	parent->transform.position += push;
 
 	lastTransform = parent->transform;
-	lines.transform = parent->transform;
+
+#ifdef _DEBUG
+	if (Tools::debug)
+		lines->transform = parent->transform;	
+#endif // DEBUG
 }
 
 float CollisionComponent::smallestOverlap(float posaxis, float negaxis)
@@ -197,6 +208,15 @@ bool CollisionComponent::collide(Bounds obounds, Bounds mbounds)
 		return true;
 	}
 	return false;
+}
+
+void CollisionComponent::freeData()
+{
+	parent->GetSetup()->GetObjectContainer()->drawables.erase(GetID());
+#ifdef _DEBUG
+	if (Tools::debug)
+		delete lines;
+#endif // DEBUG
 }
 
 CollisionComponent::CollisionComponent()

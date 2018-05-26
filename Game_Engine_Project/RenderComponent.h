@@ -18,6 +18,7 @@ public:
 
 	virtual void Render(CameraComponent* camera);
 	void init(uint32_t id) override;
+	void freeData() override;
 
 	RenderComponent();
 	~RenderComponent();

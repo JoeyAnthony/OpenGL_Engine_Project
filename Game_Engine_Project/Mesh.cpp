@@ -45,6 +45,13 @@ Bounds Mesh::getBounds()
 	return bounds;
 }
 
+void Mesh::freeData()
+{
+	//glDeleteBuffers(1, &VBO);
+	//glDeleteBuffers(1, &EBO);
+	//glDeleteBuffers(1, &VAO);
+}
+
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
 {
 	this->vertices = vertices;
@@ -71,6 +78,7 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
+
 }
 
 void Mesh::setupMesh()

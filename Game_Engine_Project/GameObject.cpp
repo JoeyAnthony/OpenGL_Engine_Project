@@ -3,6 +3,8 @@
 #include "RenderComponent.h"
 #include "CameraComponent.h"
 #include "GameSetup.h"
+#include <glm/gtc/constants.hpp>
+#include "Tools.h"
 
 uint32_t GameObject::NewComponentNum()
 {
@@ -10,10 +12,56 @@ uint32_t GameObject::NewComponentNum()
 	return  newID;
 }
 
+void GameObject::DeallocateComponents()
+{
+	for (auto comp : ComponentList)
+	{
+		if (!dynamic_cast<ModelComponent*>(comp))
+		{
+			comp->freeData();
+			delete comp;
+		}
+	}
+	ComponentList.clear();
+}
+
+void GameObject::UpdateTransform()
+{
+	//calculate right vector
+	glm::vec3 fvec = glm::vec3{ glm::normalize(glm::vec4(0, 0, -1, 1) * transform.modelMatrix) };
+	fvec.z *= -1;
+	transform.right = glm::cross(transform.forward, transform.up);
+
+	transform.forward = glm::normalize(fvec);
+
+	////calculate forward vector
+	//glm::vec3 front;
+	//front.x = cos(glm::radians(transform.rotation.x)) * cos(glm::radians(transform.rotation.y));
+	//front.y = sin(glm::radians(transform.rotation.x));
+	//front.z = cos(glm::radians(transform.rotation.x)) * sin(glm::radians(transform.rotation.y));
+	//transform.forward = glm::normalize(front);
+
+
+
+}
+
 GameObject* GameObject::Create(GameSetup *game)
 {
 	GameObject obj(game);
 	return game->AddGameObject(obj);
+}
+
+void GameObject::Destroy()
+{
+		std::pair<uint32_t, GameObject*> pair(ID, &GetSetup()->GetObjectContainer()->MasterGameObjectList[ID]);
+		GetSetup()->GetObjectContainer()->markedForDeletion.insert(pair);
+}
+
+void GameObject::setForward(glm::vec3 dir)
+{
+	transform.rotation.y = std::atan2( dir.z, dir.y) * 180 / glm::pi<GLfloat>();
+	Debug("deg: " << transform.rotation.y << " x: " << dir.x << " y: " << dir.y << " z: " << dir.z << std::endl);
+	//transform.rotation.x = -std::asin(dir.y);
 }
 
 void GameObject::AddComponent(Component* component)
@@ -44,15 +92,12 @@ void GameObject::AddComponent(Component* component)
 
 void GameObject::Update()
 {
+
+
 	for (Component* obj : ComponentList)
 	{
 		obj->Update();
 	}
-
-	//for (std::vector<Component*>::iterator it = ComponentList.begin(); it != ComponentList.end(); ++it)
-	//{
-	//	
-	//}
 }
 
 void GameObject::LateUpdate()
@@ -62,10 +107,6 @@ void GameObject::LateUpdate()
 		obj->LateUpdate();
 	}
 
-	//for (auto it = ComponentList.begin(); it != ComponentList.end(); ++it)
-	//{
-	//	it->Update();
-	//}
 }
 
 void GameObject::FixedUpdate()
@@ -75,11 +116,6 @@ void GameObject::FixedUpdate()
 		obj->FixedUpdate();
 	}
 
-	//for (auto it = ComponentList->begin(); it != ComponentList->end(); ++it)
-	//{
-	//	//it->second.FixedUpdate();
-	//	it->second->LateUpdate();
-	//}
 }
 
 void GameObject::init(uint32_t id)

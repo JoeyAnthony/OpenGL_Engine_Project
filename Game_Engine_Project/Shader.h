@@ -29,7 +29,10 @@ public:
 	void SetVec3(std::string name, glm::vec3 value);
 	void SetVec3Array(std::string name, glm::vec3 v[]);
 
+	void destroy();
+
 	Shader();
+	Shader(const Shader* shader);
 	Shader(const char * vertex_file_path, const char * fragment_file_path);
 	~Shader();
 };

@@ -1,8 +1,6 @@
 #include "Component.h"
 #include "GameObject.h"
 
-
-
 const uint32_t Component::GetID()
 {
 	return ID;
@@ -30,12 +28,16 @@ void Component::init(uint32_t id)
 {
 	if (Initialized)
 	{
-		std::cout << "Already initialized" << std::endl;
+		Debug("Already initialized" << std::endl);
 		return;
 	}
-	std::cout << "Component init" << std::endl;
+	//std::cout << "Component init" << std::endl;
 	ID = id;
 	Initialized = true;
+}
+
+void Component::freeData()
+{
 }
 
 Component::Component()

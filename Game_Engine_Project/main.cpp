@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 {
 	glfwSetErrorCallback(ErrorCallbak);
 	Window window;
-	window.SetWindowSize(1280, 720);
+	window.SetWindowSize(2560, 1440);
 	window.Hints();
 	window.Start();
 	window.StandardSettings();
@@ -79,8 +79,9 @@ int main(int argc, char* argv[])
 	glfwSetMouseButtonCallback(window.GetWindow(), Mouse::MouseButtonCallback);
 	glfwSetCursorPosCallback(window.GetWindow(), Mouse::MouseCursorPosCallback);
 	glfwSetCursorEnterCallback(window.GetWindow(), Mouse::MouseEnterCallback);
+	//glfwSetWindowSizeCallback(window.GetWindow(), window.Resize);
 
-	glfwSetInputMode(window.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	//glfwSetInputMode(window.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	glViewport(0, 0, window.Width(), window.Height());
 

@@ -1,5 +1,6 @@
 #include "Model.h"
 #include <filesystem>
+#include "Tools.h"
 namespace fs = std::experimental::filesystem;
 
 void Model::initModel()
@@ -12,7 +13,7 @@ Model::Model()
 
 Model::Model(const Model * model)
 {
-	shader = model->shader;
+	shader = Shader(model->shader);
 	directory = model->directory;
 	meshes = model->meshes;
 	loadedTextures = model->loadedTextures;
@@ -31,6 +32,7 @@ Model::Model(std::string directory, std::string modelname, GameObject* parent, b
 
 Model::~Model()
 {
+
 }
 
 void Model::Draw(Shader shader)
@@ -79,13 +81,26 @@ void Model::loadModel(std::string directory, std::string modelname)
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+		Debug("ERROR::ASSIMP::" << importer.GetErrorString() << std::endl);
 		return;
 	}
 	this->directory = directory;
 
 	processNode(scene->mRootNode, scene);
 
+}
+
+void Model::freeData()
+{
+	for (int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].freeData();
+	}
+
+	for (int i = 0; i < loadedTextures.size(); i++)
+	{
+		loadedTextures[i].freeData();
+	}
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene)
@@ -168,7 +183,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 	{
 		std::vector<Texture> allMaps = searchTexturesInDir();
 		if (allMaps.size() == 0)
-			std::cout << "No textures found in directory" << std::endl;
+			Debug("No textures found in directory" << std::endl);
 		textures.insert(textures.end(), allMaps.begin(), allMaps.end());
 	}
 	else if (mesh->mMaterialIndex >= 0)

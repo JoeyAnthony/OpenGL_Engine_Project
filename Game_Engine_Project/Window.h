@@ -15,9 +15,11 @@ private:
 
 public:
 	void SetWindowSize(GLuint w, GLuint h);
+	void Resize(GLFWwindow * window, int width, int height);
 	void Hints();
 	void Start();
 	void StandardSettings();
+	
 
 	GLuint Width();
 	GLuint Height();

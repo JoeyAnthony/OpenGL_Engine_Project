@@ -29,6 +29,8 @@ void RenderComponent::Render(CameraComponent* camera)
 	//scaling
 	model = glm::scale(model, parent->transform.scale);
 
+	parent->transform.modelMatrix = model;
+
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(camera->view * model)));
 	modelinfo->model.shader.SetVec3("camPos", camera->parent->transform.position);
 
@@ -50,7 +52,7 @@ void RenderComponent::init(uint32_t id)
 {
 	Component::init(id);
 
-	std::cout << "Renderinit" << std::endl;
+	Debug("Renderinit" << std::endl);
 	modelinfo = parent->GetComponent<ModelComponent>();
 
 	parent->GetSetup()->AddDrawable(this);
@@ -58,9 +60,14 @@ void RenderComponent::init(uint32_t id)
 	if (modelinfo == nullptr)
 	{
 		hasmodelinfo = true;
-		std::cout << "No model component found" << std::endl;
+		Debug("No model component found" << std::endl);
 		//inactive state
 	}
+}
+
+void RenderComponent::freeData()
+{
+	parent->GetSetup()->GetObjectContainer()->drawables.erase(GetID());
 }
 
 RenderComponent::RenderComponent()
