@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "RenderComponent.h"
 #include "CollisionComponent.h"
+#include "Light.h"
 
 void ProjectileCannon::Update()
 {
@@ -25,6 +26,7 @@ void ProjectileCannon::Update()
 		gm->AddComponent(new RenderComponent());
 		gm->AddComponent(new CollisionComponent());
 		gm->AddComponent(new Bullet(travelSpeed, parent->transform.forward));
+		gm->AddComponent(new Light());
 		gm->transform.position = parent->transform.position;
 		gm->transform.rotation = parent->transform.rotation;
 		gm->transform.scale = glm::vec3(0.3, 0.3, 0.3);

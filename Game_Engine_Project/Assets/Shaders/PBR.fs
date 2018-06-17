@@ -1,5 +1,11 @@
-#version 330 core
-out vec4 fragcolor;
+#version 420 core
+layout (std140, binding = 0) uniform lights
+{                               //base alignment    base offset     alignment offset        used bytes
+    int index;                  //  4               0                0                      0.. 3
+    vec4 light[100];             //  160             4                16 (16 per index)     16.. 175
+    vec4 lightcolours[100];      //  160             176              176                  
+};
+
 //in variables
 in VS_OUT
 {
@@ -7,8 +13,8 @@ in VS_OUT
     vec3 tangentWorldPos;
     vec3 tangentCampos;
     vec3 tangentNormal;
-    vec3 lightArray[5];
-    vec3 lightColorArray[5];
+    vec3 lightArray[10];
+    vec3 lightColorArray[10];
 } vs_in;
 
 
@@ -70,7 +76,7 @@ float SmithGGX(vec3 normal, vec3 viewdir, vec3 lightdir, float roughness)
     return gsub1*gsub2;
 }
 
-
+out vec4 fragcolor;
 void main()
 {
     //vec3 normal = vs_in.tangentNormal;
@@ -94,18 +100,20 @@ void main()
     vec3 Lo = vec3(0.0);
 
     //loop over lights
-    for( int i = 0; i < 4; i++)
+    for( int i = 0; i < index; i++)
     {
         //light-in direction(L)
-        vec3 LiDir = normalize(vs_in.lightArray[i] - vs_in.tangentWorldPos);
+        //vec3 LiDir = normalize(vs_in.lightArray[i] - vs_in.tangentWorldPos);
+        vec3 LiDir = normalize(light[i].xzy - vs_in.tangentWorldPos); //z and y positions are exchanged for some reason
         //halfway vector(H)
         vec3 halfwayVec =  normalize(LoDir + LiDir);
 
 
         //brightness
-        float dist = length(vs_in.lightArray[i] - vs_in.tangentWorldPos);
-        float attenuation = 1.0 /(dist * dist); //TEST FULL ATTENUATION
-        vec3 radiance = vs_in.lightColorArray[i] * attenuation; //andere attenuation misschien(meer controle?)
+        //float dist = length(vs_in.lightArray[i] - vs_in.tangentWorldPos);
+        float dist = length(light[i].xzy - vs_in.tangentWorldPos);
+        float attenuation = 1.0 /(dist * dist); //TEST FULL ATTENUATION //andere attenuation misschien(meer controle?)
+        vec3 radiance = lightcolours[i].xzy * attenuation; 
     
         ////Calculating Cook-Torrace specular BRDF////
         //reflectance at zero incidence, base reflectance

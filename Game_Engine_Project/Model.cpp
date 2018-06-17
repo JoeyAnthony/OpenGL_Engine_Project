@@ -13,7 +13,7 @@ Model::Model()
 
 Model::Model(const Model * model)
 {
-	shader = Shader(model->shader);
+	shader = model->shader;
 	directory = model->directory;
 	meshes = model->meshes;
 	loadedTextures = model->loadedTextures;
@@ -35,7 +35,7 @@ Model::~Model()
 
 }
 
-void Model::Draw(Shader shader)
+void Model::Draw(Shader* shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{

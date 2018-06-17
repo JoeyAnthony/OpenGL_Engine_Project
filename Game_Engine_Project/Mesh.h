@@ -15,7 +15,7 @@ public:
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
 
-	void Draw(Shader shader);
+	void Draw(Shader* shader);
 	/*
 	*Returns bounds of THIS mesh
 	*/

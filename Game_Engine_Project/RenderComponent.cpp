@@ -9,7 +9,7 @@
 
 void RenderComponent::Render(CameraComponent* camera)
 {
-	modelinfo->model.shader.UseShader();
+	modelinfo->model.shader->UseShader();
 	//modelinfo->bindTextures();
 
 	//update? or render? Render: because interpolation should be applied
@@ -32,13 +32,13 @@ void RenderComponent::Render(CameraComponent* camera)
 	parent->transform.modelMatrix = model;
 
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(camera->view * model)));
-	modelinfo->model.shader.SetVec3("camPos", camera->parent->transform.position);
+	modelinfo->model.shader->SetVec3("camPos", camera->parent->transform.position);
 
 	//setting matrices / must be set while using the shader program or it won't work
-	glUniformMatrix4fv(modelinfo->model.shader.shaderlocations.modelmatrixloc, 1, GL_FALSE, glm::value_ptr(model)); //model
-	glUniformMatrix4fv(modelinfo->model.shader.shaderlocations.viewmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->view)); //view
-	glUniformMatrix4fv(modelinfo->model.shader.shaderlocations.projectionmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->projection)); //projection
-	glUniformMatrix3fv(modelinfo->model.shader.shaderlocations.normalmatrixloc, 1, GL_FALSE, glm::value_ptr(normalMatrix)); //normalmatrix
+	glUniformMatrix4fv(modelinfo->model.shader->shaderlocations.modelmatrixloc, 1, GL_FALSE, glm::value_ptr(model)); //model
+	glUniformMatrix4fv(modelinfo->model.shader->shaderlocations.viewmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->view)); //view
+	glUniformMatrix4fv(modelinfo->model.shader->shaderlocations.projectionmatrixloc, 1, GL_FALSE, glm::value_ptr(camera->projection)); //projection
+	glUniformMatrix3fv(modelinfo->model.shader->shaderlocations.normalmatrixloc, 1, GL_FALSE, glm::value_ptr(normalMatrix)); //normalmatrix
 
 	//glBindVertexArray(modelinfo->VAO);
 	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);

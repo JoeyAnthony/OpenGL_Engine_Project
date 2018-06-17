@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-void Mesh::Draw(Shader shader)
+void Mesh::Draw(Shader* shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -30,7 +30,7 @@ void Mesh::Draw(Shader shader)
 			number = std::to_string(heightNr++);
 
 
-		shader.SetInt(name.append(number), i);
+		shader->SetInt(name.append(number), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].texid);
 	}
 	glActiveTexture(GL_TEXTURE0);

@@ -15,7 +15,7 @@ class Model
 {
 public:
 	//data
-	Shader shader;
+	Shader* shader;
 
 	//functions
 	/*
@@ -26,7 +26,7 @@ public:
 	/*
 	* Draws the model with a shader(in render call)
 	*/
-	void Draw(Shader shader);
+	void Draw(Shader* shader);
 
 	/*
 	* Add texture to a mesh manually

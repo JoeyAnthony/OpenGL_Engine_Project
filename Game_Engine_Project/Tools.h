@@ -4,8 +4,8 @@
 #include <glm\glm.hpp>
 
 #ifdef _DEBUG
-//#define Debug(x) std::cout << x
-	#define Debug(x) 
+#define Debug(x) std::cout << x
+	//#define Debug(x) 
 #else
 #define Debug(x) 
 #endif 

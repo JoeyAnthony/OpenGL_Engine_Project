@@ -1,13 +1,15 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
-#include "GameObject.h"
 
+#include "Shader.h"
+#include "UniformBuffer.h"
+
+#include "GameObject.h"
 #include "Window.h"
 
 class CameraComponent;
 class RenderComponent;
-
 
 struct ObjectContainer
 {
@@ -15,18 +17,26 @@ struct ObjectContainer
 	std::unordered_map<uint32_t, CameraComponent*> cameras;
 	std::unordered_map<uint32_t, RenderComponent*> drawables;
 	std::unordered_map<uint32_t, GameObject*> markedForDeletion;
+	std::unordered_map<uint32_t, LightData> lights;
+	glm::vec4 lightspos[100];
+	glm::vec4 lightscolour[100];
 };
 
 class GameSetup
 {
 private:
 
+	Shader * pbrShader;
 	ObjectContainer objectContainer;
 	uint32_t GameObjectCount = 0;
+	uint32_t lightcount = 0;
 	/**
 	* 
 	*/
 	int NewGameObjectNum();
+
+	UniformBuffer UBO;
+
 
 public:
 	/*
@@ -49,6 +59,17 @@ public:
 	*/
 	void AddDrawable(RenderComponent* component);
 	void AddDrawable(CameraComponent* component);
+
+	/*
+	*Add light to the scene
+	*/
+	uint32_t AddLight(glm::vec3 pos, glm::vec3 color);
+
+	/*
+	*Remove light
+	*/
+	void RemoveLight(uint32_t id);
+
 	//void AddDrawable(CollisionComponent * component);
 
 	/**
@@ -75,6 +96,11 @@ public:
 	* Remove marked objects
 	*/
 	void DeleteMarkedObjects();
+
+	/**
+	* Updates UBOs
+	*/
+	void UpdateShaders();
 
 	/**
 	* Returns the objectcontainer

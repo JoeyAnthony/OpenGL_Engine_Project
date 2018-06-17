@@ -145,6 +145,7 @@
     <ClCompile Include="GameCam.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="TestRotation.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="UniformBuffer.cpp" />
     <ClCompile Include="Vec.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="LineRenderer.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="TestRotation.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="UniformBuffer.h" />
     <ClInclude Include="Vec.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />

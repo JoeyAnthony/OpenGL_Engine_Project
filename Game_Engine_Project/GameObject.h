@@ -15,6 +15,12 @@
 class Component;
 class GameSetup;
 
+struct LightData
+{
+	glm::vec3 pos;
+	glm::vec3 color;
+};
+
 struct Transform
 {
 	//tranformations
