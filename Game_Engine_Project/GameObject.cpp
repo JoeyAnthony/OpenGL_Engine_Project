@@ -30,9 +30,9 @@ void GameObject::UpdateTransform()
 	//calculate right vector
 	glm::vec3 fvec = glm::vec3{ glm::normalize(glm::vec4(0, 0, -1, 1) * transform.modelMatrix) };
 	fvec.z *= -1;
-	transform.right = glm::cross(transform.forward, transform.up);
-
 	transform.forward = glm::normalize(fvec);
+	transform.right = glm::cross(transform.forward, transform.up);//this seems wrong?
+
 
 	////calculate forward vector
 	//glm::vec3 front;
@@ -64,7 +64,8 @@ void GameObject::setForward(glm::vec3 dir)
 	//transform.rotation.x = -std::asin(dir.y);
 }
 
-void GameObject::AddComponent(Component* component)
+//why no templates?
+Component* GameObject::AddComponent(Component* component)
 {
 	component->parent = this;
 
@@ -84,7 +85,7 @@ void GameObject::AddComponent(Component* component)
 	}
 
 	ComponentList.push_back(component);
-
+	return component;
 }
 
 //template <typename T>
@@ -143,8 +144,6 @@ GameObject::GameObject(const GameObject& obj)
 {
 	ComponentList = obj.ComponentList;
 	ParentSetup = obj.ParentSetup;
-	Position = obj.Position;
-	Rotation = obj.Rotation;
 	name = obj.name;
 	transform = obj.transform;
 }

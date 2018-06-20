@@ -90,11 +90,13 @@ public:
 	/**
 	*	position of this gameobject
 	*/
+	[[deprecated]]
 	Vec3f Position;
 
 	/**
 	* rotation of this gameobject
 	*/
+	[[deprecated]]
 	Vec3f Rotation;
 
 	/**
@@ -112,7 +114,7 @@ public:
 	/**
 	*
 	*/
-	void AddComponent(Component* component);
+	Component* AddComponent(Component* component);
 
 	/**
 	* Delete component

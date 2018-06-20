@@ -3,7 +3,6 @@
 #include "CameraComponent.h"
 #include "ModelComponent.h"
 #include "RenderComponent.h"
-#include "ControllerComponent.h"
 #include "TestRotation.h"
 #include "CollisionComponent.h"
 #include "FreeCam.h"
@@ -11,6 +10,7 @@
 #include "PlayerInput.h"
 #include "ProjectileCannon.h"
 #include "Light.h"
+#include "EnemySpawner.h"
 
 
 GameObject* GameSetup::AddGameObject(GameObject obj)
@@ -131,8 +131,8 @@ void GameSetup::UpdateShaders()
 		//lightscolour.push_back(p.second.color);
 		index++;
 	}
-	UBO.updateSubBuffer(16, sizeof(objectContainer.lightspos),  &objectContainer.lightspos[0]); //works but y and z are exchanged in the shader
-	UBO.updateSubBuffer(sizeof(objectContainer.lightspos) +16, sizeof(objectContainer.lightscolour), &objectContainer.lightscolour[0]); //probably won't work
+	UBO.updateSubBuffer(16, sizeof(glm::vec4) * 500,  &objectContainer.lightspos[0]); //works but y and z are exchanged in the shader
+	UBO.updateSubBuffer(sizeof(glm::vec4) * 500 +16, sizeof(glm::vec4) * 500, &objectContainer.lightscolour[0]); //probably won't work
 
 	UBO.unbind();
 }
@@ -149,21 +149,18 @@ void GameSetup::CreateScene()
 	pbrShader = new Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
 	UBO = UniformBuffer(GL_MAX_UNIFORM_BLOCK_SIZE, GL_STREAM_DRAW, 0);
 	
-	GameObject * sceneLight = GameObject::Create(this);
-	sceneLight->transform.position = {3.0, 1.5, -3.0};
-	sceneLight->AddComponent(new Light({20.0, 25.0, 30.0}));
-
-	GameObject * sceneLight2 = GameObject::Create(this);
-	sceneLight2->transform.position = { -3, 2.0, -3.0 };
-	sceneLight2->AddComponent(new Light({ 20.0, 25.0, 30.0 }));
-
-	GameObject * sceneLight3 = GameObject::Create(this);
-	sceneLight3->transform.position = { 3.0, 2.0, 3.0 };
-	sceneLight3->AddComponent(new Light({ 20.0, 25.0, 30.0 }));
-
-	GameObject * sceneLight4 = GameObject::Create(this);
-	sceneLight4->transform.position = { -3.0, 2.0, 3.0 };
-	sceneLight4->AddComponent(new Light({ 20.0, 25.0, 30.0 }));
+	//place lights
+	int numrounds = 6;
+	int dist = 6;
+	for (int i = 1; i < numrounds; i++)
+	{
+		for (int j = 1; j < numrounds; j++)
+		{
+			GameObject * sceneLight = GameObject::Create(this);
+			sceneLight->transform.position = { i*dist - (numrounds/2 * dist), .7, j*-dist + (numrounds/2 * dist) };
+			sceneLight->AddComponent(new Light({ 10.0, 12.5, 15.0 }));
+		}
+	}
 
 	ModelComponent* floormodel = new ModelComponent("Assets/Levels/TopViewShooter/Enviroment/floor", "Floor_Plane.obj", true);
 	floormodel->model.shader = pbrShader;
@@ -177,6 +174,8 @@ void GameSetup::CreateScene()
 	ModelComponent* chestmodel = new ModelComponent("Assets/Models/chestdavy", "Chest_low_Unwrapped.obj", true);
 	chestmodel->model.shader = pbrShader;
 
+	ModelComponent* enemymodel = new ModelComponent("Assets/Levels/TopViewShooter/Characters/enemyrect", "Enemy_Rectangle.obj", true);
+	enemymodel->model.shader = pbrShader;
 
 	float height = 0.4455f;
 	
@@ -198,21 +197,16 @@ void GameSetup::CreateScene()
 	player->transform.scale = glm::vec3(0.2, 0.2, 0.2);
 	player->transform.position = glm::vec3(0, height, 0);
 	player->AddComponent(new PlayerInput(cc));
-	player->AddComponent(new ProjectileCannon(0.05f, false, bulletModel));
+	player->AddComponent(new ProjectileCannon(0.1f, 20.0,false, bulletModel, {10.0, 27.0, 14.0}));
+	player->AddComponent(new CollisionComponent());
+
+	GameObject* enemySpawner = GameObject::Create(this);
+	EnemySpawner* spawn = new EnemySpawner(player, enemymodel, bulletModel);
+	enemySpawner->AddComponent(spawn);
 	
 	camera->AddComponent(new GameCam(player)); //add gamecam to camera with player ref
 	//camera->AddComponent(new FreeCam());	
 
-
-	
-
-	//GameObject* plane = GameObject::Create(this);
-	//ModelComponent* planemodel = new ModelComponent("Assets/Models/Plane", "Plane.obj", true);
-	//planemodel->model.shader = pbrShader;
-	//plane->AddComponent(planemodel);
-	//plane->AddComponent(new RenderComponent());
-	//plane->transform.scale = glm::vec3(.5, .5, .5);
-	//plane->transform.position = glm::vec3(0, -3, 0);
 }
 
 GameSetup::GameSetup(Window* window)

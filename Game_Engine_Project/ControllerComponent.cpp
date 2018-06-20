@@ -22,13 +22,13 @@ void ControllerComponent::Update()
 
 void ControllerComponent::CameraZ(float fac)
 {
-	parent->Position.y += fac;
+	//parent->Position.y += fac;
 }
 
 void ControllerComponent::Move(float angle, float fac)
 {
-	parent->Position.x += (float)cos((parent->Rotation.y + angle) / 180.0f * M_PI) * fac;
-	parent->Position.z += (float)sin((parent->Rotation.y + angle) / 180.0f * M_PI) * fac;
+	//parent->Position.x += (float)cos((parent->Rotation.y + angle) / 180.0f * M_PI) * fac;
+	//parent->Position.z += (float)sin((parent->Rotation.y + angle) / 180.0f * M_PI) * fac;
 	
 	//std::cout << "Move" << std::endl;
 }

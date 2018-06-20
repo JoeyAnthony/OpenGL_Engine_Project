@@ -8,8 +8,6 @@ public:
 	bool ismaincam = false;
 
 	void init(uint32_t id) override;
-	void Update() override;
-	void LateUpdate() override;
 	void Render();
 	void freeData() override;
 

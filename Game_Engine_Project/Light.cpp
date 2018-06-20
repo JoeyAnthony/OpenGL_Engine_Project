@@ -15,14 +15,13 @@ void Light::init(uint32_t id)
 
 void Light::Update()
 {
-	if (glm::length((parent->transform.position - lastpos)) > 0.1)
+	if (glm::length((parent->transform.position - lastpos)) > 0.001)
 	{
 		needUpdate = true;
-		parent->GetSetup()->GetObjectContainer()->lights[lightID].pos = parent->transform.position; //bug light gets added
+		parent->GetSetup()->GetObjectContainer()->lights[lightID].pos = parent->transform.position; 
 	}
 	if (needUpdate)
 	{
-		parent->GetSetup()->UpdateShaders();
 		needUpdate = false;
 	}
 	lastpos = parent->transform.position;
@@ -33,7 +32,7 @@ void Light::freeData()
 	parent->GetSetup()->RemoveLight(lightID);
 }
 
-Light::Light() : Light(vec3(20.47, 5.31, 5.79))
+Light::Light() : Light(vec3(23.47, 21.31, 20.79))
 {
 }
 

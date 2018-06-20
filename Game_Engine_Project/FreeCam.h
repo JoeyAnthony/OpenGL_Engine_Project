@@ -15,7 +15,6 @@ public:
 
 	void init(uint32_t id) override;
 	void Update() override;
-	void LateUpdate() override;
 
 	FreeCam();
 	~FreeCam();

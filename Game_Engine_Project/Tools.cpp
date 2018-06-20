@@ -64,24 +64,20 @@ glm::vec3 Tools::lerp(glm::vec3 vec0, glm::vec3 vec1, float t)
 	return (1.0f - t) * vec0 + t * vec1;
 }
 
-float Tools::angleLerp(float a0, float a1, float t)
-{
-	//float max = glm::pi<float>() * 2;
-	//float da = glm::mod((a1 - a0), max);
-	//float val = glm::mod((2 * da), max - da);
 
-	//return a0 + val * t;
 
-	//float w = (a1-a0) * t;
-
-	//float CS = (1 - w) * glm::cos(a0) + w * cos(a1);
-	//float  SN = (1 - w) * glm::sin(a0) + w * glm::sin(a1);
-	//float C = std::atan2(SN, CS);
-	//return C;
-
-	float shortestdistance = glm::mod(glm::mod(a1 - a0, 360.0f) + 540.0f, 360.0f) - 180.0f;
-	return shortestdistance * t;
-}
+//float Tools::shortAngleDist(float a0, float a1)
+//{
+//	float max = glm::two_pi<float>();
+//	float da = std::fmod((a1 - a0), max);
+//	return 2* std::fmod(da, (max - da));
+//}
+//
+//
+//float Tools::angleLerp(float a0, float a1, float t)
+//{
+//	return a0 + shortAngleDist(a0, a1)*t;
+//}
 
 
 

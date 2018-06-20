@@ -4,8 +4,8 @@
 #include <glm\glm.hpp>
 
 #ifdef _DEBUG
-#define Debug(x) std::cout << x
-	//#define Debug(x) 
+//#define Debug(x) std::cout << x
+	#define Debug(x) 
 #else
 #define Debug(x) 
 #endif 
@@ -45,7 +45,8 @@ namespace Tools
 	float lerp(float v0, float v1, float t);
 	glm::vec3 lerp(glm::vec3 vec0, glm::vec3 vec1, float t);
 	
-	float angleLerp(float a0, float a1, float t);
+	//float shortAngleDist(float a0, float a1);
+	//float angleLerp(float a0, float a1, float t);
 
 	glm::vec3 screenToWorld(glm::vec2 mousepos, glm::mat4 view, glm::mat4 projection, int screenwidth, int screenheight);
 

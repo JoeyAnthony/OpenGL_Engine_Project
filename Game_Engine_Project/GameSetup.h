@@ -18,8 +18,8 @@ struct ObjectContainer
 	std::unordered_map<uint32_t, RenderComponent*> drawables;
 	std::unordered_map<uint32_t, GameObject*> markedForDeletion;
 	std::unordered_map<uint32_t, LightData> lights;
-	glm::vec4 lightspos[100];
-	glm::vec4 lightscolour[100];
+	glm::vec4 lightspos[500];
+	glm::vec4 lightscolour[500];
 };
 
 class GameSetup

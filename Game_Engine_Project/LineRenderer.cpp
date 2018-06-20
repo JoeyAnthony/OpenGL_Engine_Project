@@ -144,19 +144,7 @@ LineRenderer::~LineRenderer()
 void LineRenderer::createBuffers(glm::vec3 * array)
 {
 	
-
-	shader = Shader("Assets/Shaders/LineShader.vs", "Assets/Shaders/LineShader.fs");
-
-	//create vbo and vao
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
-	//bind vbo buffer and store vertex data in it
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
+	w
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0); //position
 	glEnableVertexAttribArray(0); //Enabling the attribute because they are disabled by default
 }

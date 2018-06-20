@@ -11,12 +11,13 @@ public:
 	float shootInterval = 1.0f;
 	float intervalCounter = 0;
 	ModelComponent* modelcmp;
+	glm::vec3 lightColor = {20, 20, 20};
 
 	//void init(uint32_t id) override;
 	void Update() override;
-	void LateUpdate() override;
 
 	ProjectileCannon(float interval, bool autom, ModelComponent* model);
+	ProjectileCannon(float interval, float travelspeed, bool autom, ModelComponent* model, glm::vec3 lightcolor);
 	~ProjectileCannon();
 };
 

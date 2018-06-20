@@ -65,10 +65,6 @@ void FreeCam::Update()
 	parent->transform.forward = glm::normalize(front);
 }
 
-void FreeCam::LateUpdate()
-{
-}
-
 FreeCam::FreeCam()
 {
 	lastmouseposition = Mouse::GetMousePos();

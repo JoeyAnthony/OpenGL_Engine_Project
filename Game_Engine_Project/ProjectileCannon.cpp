@@ -26,7 +26,7 @@ void ProjectileCannon::Update()
 		gm->AddComponent(new RenderComponent());
 		gm->AddComponent(new CollisionComponent());
 		gm->AddComponent(new Bullet(travelSpeed, parent->transform.forward));
-		gm->AddComponent(new Light());
+		gm->AddComponent(new Light(lightColor));
 		gm->transform.position = parent->transform.position;
 		gm->transform.rotation = parent->transform.rotation;
 		gm->transform.scale = glm::vec3(0.3, 0.3, 0.3);
@@ -40,15 +40,17 @@ void ProjectileCannon::Update()
 	intervalCounter += Tools::DeltaTime();
 }
 
-void ProjectileCannon::LateUpdate()
-{
-}
-
 ProjectileCannon::ProjectileCannon(float interval, bool autom, ModelComponent* model)
 {
 	shootInterval = interval;
 	automatic = autom;
 	modelcmp = model;
+}
+
+ProjectileCannon::ProjectileCannon(float interval, float travelspeed, bool autom, ModelComponent * model, glm::vec3 lightcolor) : ProjectileCannon(interval, autom, model)
+{
+	travelSpeed = travelspeed;
+	lightColor = lightcolor;
 }
 
 ProjectileCannon::~ProjectileCannon()

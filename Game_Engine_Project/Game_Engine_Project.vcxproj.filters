@@ -120,8 +120,14 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Source Files\GameplayComponents</Filter>
+    </ClCompile>
     <ClCompile Include="UniformBuffer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LowerLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameplayComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +210,13 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="UniformBuffer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\LowerLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Header Files\GameplayComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\GameplayComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

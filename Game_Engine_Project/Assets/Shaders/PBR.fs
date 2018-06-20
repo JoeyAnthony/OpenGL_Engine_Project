@@ -2,8 +2,8 @@
 layout (std140, binding = 0) uniform lights
 {                               //base alignment    base offset     alignment offset        used bytes
     int index;                  //  4               0                0                      0.. 3
-    vec4 light[100];             //  160             4                16 (16 per index)     16.. 175
-    vec4 lightcolours[100];      //  160             176              176                  
+    vec4 light[500];             //  160             4                16 (16 per index)     16.. 175
+    vec4 lightcolours[500];      //  160             176              176                  
 };
 
 //in variables
@@ -13,8 +13,6 @@ in VS_OUT
     vec3 tangentWorldPos;
     vec3 tangentCampos;
     vec3 tangentNormal;
-    vec3 lightArray[10];
-    vec3 lightColorArray[10];
 } vs_in;
 
 
@@ -103,17 +101,15 @@ void main()
     for( int i = 0; i < index; i++)
     {
         //light-in direction(L)
-        //vec3 LiDir = normalize(vs_in.lightArray[i] - vs_in.tangentWorldPos);
         vec3 LiDir = normalize(light[i].xzy - vs_in.tangentWorldPos); //z and y positions are exchanged for some reason
         //halfway vector(H)
         vec3 halfwayVec =  normalize(LoDir + LiDir);
 
 
         //brightness
-        //float dist = length(vs_in.lightArray[i] - vs_in.tangentWorldPos);
         float dist = length(light[i].xzy - vs_in.tangentWorldPos);
         float attenuation = 1.0 /(dist * dist); //TEST FULL ATTENUATION //andere attenuation misschien(meer controle?)
-        vec3 radiance = lightcolours[i].xzy * attenuation; 
+        vec3 radiance = lightcolours[i].rgb * attenuation; 
     
         ////Calculating Cook-Torrace specular BRDF////
         //reflectance at zero incidence, base reflectance
