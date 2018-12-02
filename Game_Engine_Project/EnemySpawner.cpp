@@ -24,7 +24,7 @@ void EnemySpawner::spawnEnemy(int enemycount)
 		enemy->AddComponent(enemyModel);
 		enemy->AddComponent(new RenderComponent());
 		enemy->AddComponent(new CollisionComponent());
-		enemy->AddComponent(new ProjectileCannon(0.35, 12.0, true, bulletModel, {20.0, 12.0, 17.0}));
+		enemy->AddComponent(new ProjectileCannon(0.7, 9.0, true, bulletModel, {20.0, 12.0, 17.0}));
 		enemy->AddComponent(new Enemy(this, player)); //yh I know, templates are better
 		aliveEnemies.push_back(enemy);
 	}

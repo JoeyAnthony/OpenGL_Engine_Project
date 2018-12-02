@@ -4,12 +4,14 @@
 #include <unordered_map>
 #include <glm\gtx\intersect.hpp>
 
+Shader* CollisionComponent::lineshader;
+
 void CollisionComponent::Render(CameraComponent * cam)
 {
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	if(Tools::debug)
 		lines->Draw(cam);
-#endif // DEBUG
+//#endif // DEBUG
 }
 
 void CollisionComponent::init(uint32_t id)
@@ -23,10 +25,10 @@ void CollisionComponent::init(uint32_t id)
 		bounds.minBounds = glm::vec3(-0.5, -0.5, -0.5);
 	}
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	if(Tools::debug)
-		lines = new LineRenderer(bounds);
-#endif // DEBUG
+		lines = new LineRenderer(bounds, this);
+//#endif // DEBUG
 
 	Component::init(id);
 	parent->GetSetup()->AddDrawable(this);
@@ -42,10 +44,10 @@ void CollisionComponent::Update()
 
 	lastTransform = parent->transform;
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	if (Tools::debug)
 		lines->transform = parent->transform;	
-#endif // DEBUG
+//#endif // DEBUG
 }
 
 float CollisionComponent::smallestOverlap(float posaxis, float negaxis)
@@ -213,14 +215,15 @@ bool CollisionComponent::collide(Bounds obounds, Bounds mbounds)
 void CollisionComponent::freeData()
 {
 	parent->GetSetup()->GetObjectContainer()->drawables.erase(GetID());
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	if (Tools::debug)
 		delete lines;
-#endif // DEBUG
+//#endif // DEBUG
 }
 
 CollisionComponent::CollisionComponent()
 {
+	
 }
 
 

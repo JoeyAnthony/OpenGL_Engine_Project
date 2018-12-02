@@ -95,7 +95,7 @@ void main()
     vec3 LoDir = normalize((vs_in.tangentCampos - vs_in.tangentWorldPos));
 
     //radiance out
-    vec3 Lo = vec3(0.0);
+    vec3 Lo = vec3(0.0); 
 
     //loop over lights
     for( int i = 0; i < index; i++)

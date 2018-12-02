@@ -1,8 +1,9 @@
 #include "LineRenderer.h"
+#include "CollisionComponent.h"
 
 void LineRenderer::Draw(CameraComponent* cam)
 {
-	shader.UseShader();
+	CollisionComponent::lineshader->UseShader();
 
 	//transformation
 	glm::mat4 model;
@@ -19,11 +20,11 @@ void LineRenderer::Draw(CameraComponent* cam)
 	glm::mat4 modelviewprojection = cam->projection * cam->view * model;
 
 	//get uniform locations
-	GLuint mvploc = glGetUniformLocation(shader.shaderid_, "mvpMat");
+	GLuint mvploc = glGetUniformLocation(CollisionComponent::lineshader->shaderid_, "mvpMat");
 
 	//set uniforms, matrix and color
 	glUniformMatrix4fv(mvploc, 1, GL_FALSE, glm::value_ptr(modelviewprojection));
-	shader.SetVec3("color", color);
+	CollisionComponent::lineshader->SetVec3("color", color);
 
 	//draw
 	glBindVertexArray(VAO);
@@ -32,8 +33,9 @@ void LineRenderer::Draw(CameraComponent* cam)
 	glUseProgram(0);
 }
 
-LineRenderer::LineRenderer(Bounds bounds)
+LineRenderer::LineRenderer(Bounds bounds, CollisionComponent* coll)
 {
+	parent = coll;
 	glm::vec3 cube[]{
 		//lower square
 		glm::vec3(bounds.minBounds.x, bounds.minBounds.y, bounds.minBounds.z),
@@ -80,8 +82,9 @@ LineRenderer::LineRenderer(Bounds bounds)
 
 }
 
-LineRenderer::LineRenderer()
+LineRenderer::LineRenderer(CollisionComponent* coll)
 {
+	parent = coll;
 	glm::vec3 cube[]{
 
 		glm::vec3(-0.5f, -0.5f, -0.5f),
@@ -136,15 +139,18 @@ LineRenderer::~LineRenderer()
 {
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
-	shader.destroy();
-
 }
 
 
 void LineRenderer::createBuffers(glm::vec3 * array)
 {
-	
-	w
+	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0); //position
 	glEnableVertexAttribArray(0); //Enabling the attribute because they are disabled by default
 }

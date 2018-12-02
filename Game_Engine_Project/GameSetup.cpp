@@ -147,6 +147,10 @@ void GameSetup::CreateScene()
 	camera->AddComponent(cc);
 
 	pbrShader = new Shader("Assets/Shaders/PBR.vs", "Assets/Shaders/PBR.fs");
+	lineShader = new Shader("Assets/Shaders/LineShader.vs", "Assets/Shaders/LineShader.fs");
+	CollisionComponent::lineshader = lineShader;
+
+
 	UBO = UniformBuffer(GL_MAX_UNIFORM_BLOCK_SIZE, GL_STREAM_DRAW, 0);
 	
 	//place lights
@@ -197,7 +201,7 @@ void GameSetup::CreateScene()
 	player->transform.scale = glm::vec3(0.2, 0.2, 0.2);
 	player->transform.position = glm::vec3(0, height, 0);
 	player->AddComponent(new PlayerInput(cc));
-	player->AddComponent(new ProjectileCannon(0.1f, 20.0,false, bulletModel, {10.0, 27.0, 14.0}));
+	player->AddComponent(new ProjectileCannon(0.3f, 20.0,false, bulletModel, {10.0, 27.0, 14.0}));
 	player->AddComponent(new CollisionComponent());
 
 	GameObject* enemySpawner = GameObject::Create(this);

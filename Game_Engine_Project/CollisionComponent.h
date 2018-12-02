@@ -4,9 +4,13 @@
 #include "LineRenderer.h"
 #include "CameraComponent.h"
 
+class Shader;
+
 class CollisionComponent : public RenderComponent
 {
 public:
+	static Shader* lineshader;
+	
 	struct HitPlane
 	{
 		bool hit = false;

@@ -27,6 +27,7 @@ class GameSetup
 private:
 
 	Shader * pbrShader;
+	Shader * lineShader;
 	ObjectContainer objectContainer;
 	uint32_t GameObjectCount = 0;
 	uint32_t lightcount = 0;
