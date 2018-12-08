@@ -13,12 +13,14 @@ public:
 	Transform transform;
 	std::vector<glm::vec3> vertices;
 	glm::vec3 color = glm::vec3(0, 1, 0);
-	CollisionComponent* parent;
 
 	void Draw(CameraComponent* cam);
 	void DrawLine();
-	LineRenderer(Bounds bounds, CollisionComponent* coll);
-	LineRenderer(CollisionComponent* coll);
+	void free_data();
+
+	LineRenderer(Bounds bounds);
+	LineRenderer(const LineRenderer& lr);
+	LineRenderer();
 	~LineRenderer();
 
 private:

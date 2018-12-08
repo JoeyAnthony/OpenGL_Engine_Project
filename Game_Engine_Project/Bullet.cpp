@@ -5,6 +5,7 @@
 void Bullet::init(uint32_t id)
 {
 	parent->transform.forward = direction;
+	parent->OnCollision = std::bind(&GameObject::Destroy, parent);
 }
 
 void Bullet::outOfBounds()

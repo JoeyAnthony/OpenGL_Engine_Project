@@ -22,14 +22,16 @@ void ProjectileCannon::Update()
 	{
 		//shoot
 		GameObject* gm = GameObject::Create(parent->GetSetup());
-		gm->AddComponent(modelcmp);
-		gm->AddComponent(new RenderComponent());
-		gm->AddComponent(new CollisionComponent());
-		gm->AddComponent(new Bullet(travelSpeed, parent->transform.forward));
-		gm->AddComponent(new Light(lightColor));
-		gm->transform.position = parent->transform.position;
+		gm->transform.position = parent->transform.position + glm::vec3(0, 0.2f, 0) + parent->transform.forward;
 		gm->transform.rotation = parent->transform.rotation;
 		gm->transform.scale = glm::vec3(0.3, 0.3, 0.3);
+		gm->AddComponent(modelcmp);
+		gm->AddComponent(new RenderComponent());
+		CollisionComponent* cc = new CollisionComponent(bulletLineRenderer);
+		cc->excludeID = parent->ID;
+		gm->AddComponent(cc);
+		gm->AddComponent(new Bullet(travelSpeed, parent->transform.forward));
+		gm->AddComponent(new Light(lightColor));
 
 		intervalCounter = 0;
 	}
@@ -40,17 +42,24 @@ void ProjectileCannon::Update()
 	intervalCounter += Tools::DeltaTime();
 }
 
+void ProjectileCannon::freeData()
+{
+	bulletLineRenderer->free_data();
+}
+
 ProjectileCannon::ProjectileCannon(float interval, bool autom, ModelComponent* model)
 {
 	shootInterval = interval;
 	automatic = autom;
 	modelcmp = model;
+	bulletLineRenderer = new LineRenderer(model->model.getBounds());
 }
 
 ProjectileCannon::ProjectileCannon(float interval, float travelspeed, bool autom, ModelComponent * model, glm::vec3 lightcolor) : ProjectileCannon(interval, autom, model)
 {
 	travelSpeed = travelspeed;
 	lightColor = lightcolor;
+	bulletLineRenderer = new LineRenderer(model->model.getBounds());
 }
 
 ProjectileCannon::~ProjectileCannon()

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <typeinfo>
+#include <functional>
 
 #include "Vec.h"
 
@@ -74,8 +75,12 @@ private:
 
 protected:
 
-
 public:
+	/*
+	* Collision event function pointer
+	*/
+	std::function<void()> OnCollision;
+
 	/*
 	* Unique ID of this GameObject
 	*/
@@ -105,7 +110,7 @@ public:
 	static GameObject* Create(GameSetup *game);
 
 	/*
-	* Deletes and deallocates gameobject and averything in it
+	* Deletes gameobject and averything in it
 	*/
 	void Destroy();
 

@@ -45,6 +45,11 @@ public:
 	*/
 	uint32_t mainCamID;
 
+	/*
+	* player ID
+	*/
+	uint32_t playerID;
+
 	/**
 	* adds gameobject to the scene list
 	*/

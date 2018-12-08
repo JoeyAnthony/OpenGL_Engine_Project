@@ -14,6 +14,8 @@ void Enemy::Update()
 	float angle =  glm::atan(dir.x, dir.z);
 	parent->transform.rotation.y = glm::degrees(angle);
 	parent->UpdateTransform();
+
+
 }
 
 Enemy::Enemy(EnemySpawner * spawner, GameObject* target) : enemySpawner(spawner), target(target)

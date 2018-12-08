@@ -7,6 +7,16 @@
 struct Bounds {
 	glm::vec3 maxBounds = glm::vec3(0, 0, 0);
 	glm::vec3 minBounds = glm::vec3(0, 0, 0);
+
+	Bounds operator+ (glm::vec3 rh)
+	{
+		return {maxBounds+rh, minBounds+rh};
+	}
+
+	Bounds operator* (glm::vec3 rh)
+	{
+		return { maxBounds * rh, minBounds * rh };
+	}
 };
 class Mesh
 {

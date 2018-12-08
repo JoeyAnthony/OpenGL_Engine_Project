@@ -193,16 +193,17 @@ void GameSetup::CreateScene()
 	floor->AddComponent(floormodel);
 	floor->AddComponent(new RenderComponent());
 	floor->transform.position = glm::vec3();
-	floor->AddComponent(new CollisionComponent());
+	//floor->AddComponent(new CollisionComponent());
 
 	GameObject* player = GameObject::Create(this);
+	playerID = player->ID;
 	player->AddComponent(playermodel);
 	player->AddComponent(new RenderComponent());
 	player->transform.scale = glm::vec3(0.2, 0.2, 0.2);
 	player->transform.position = glm::vec3(0, height, 0);
 	player->AddComponent(new PlayerInput(cc));
 	player->AddComponent(new ProjectileCannon(0.3f, 20.0,false, bulletModel, {10.0, 27.0, 14.0}));
-	player->AddComponent(new CollisionComponent());
+	//player->AddComponent(new CollisionComponent());
 
 	GameObject* enemySpawner = GameObject::Create(this);
 	EnemySpawner* spawn = new EnemySpawner(player, enemymodel, bulletModel);

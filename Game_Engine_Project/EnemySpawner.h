@@ -4,6 +4,9 @@
 #include <vector>
 #include "ModelComponent.h"
 
+//class LineRenderer;
+
+
 class EnemySpawner : public Component
 {
 private:
@@ -21,6 +24,7 @@ public:
 	std::vector<GameObject*> defeatedEnemies;
 
 	void spawnEnemy(int enemycount);
+
 
 	void init(uint32_t id) override;
 	void Update() override;

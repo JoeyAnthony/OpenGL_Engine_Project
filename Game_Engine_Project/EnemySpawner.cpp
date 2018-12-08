@@ -23,7 +23,7 @@ void EnemySpawner::spawnEnemy(int enemycount)
 		enemy->transform.scale = glm::vec3(0.5, 0.5, 0.5);
 		enemy->AddComponent(enemyModel);
 		enemy->AddComponent(new RenderComponent());
-		enemy->AddComponent(new CollisionComponent());
+		//enemy->AddComponent(new CollisionComponent());
 		enemy->AddComponent(new ProjectileCannon(0.7, 9.0, true, bulletModel, {20.0, 12.0, 17.0}));
 		enemy->AddComponent(new Enemy(this, player)); //yh I know, templates are better
 		aliveEnemies.push_back(enemy);
@@ -48,8 +48,6 @@ void EnemySpawner::Update()
 	{
 		spawnEnemy(4);
 	}
-	
-
 }
 
 void EnemySpawner::freeData()

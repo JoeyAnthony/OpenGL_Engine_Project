@@ -26,8 +26,8 @@ void CollisionComponent::init(uint32_t id)
 	}
 
 //#ifdef _DEBUG
-	if(Tools::debug)
-		lines = new LineRenderer(bounds, this);
+	if(/*Tools::debug &&*/ lines == nullptr)
+		lines = new LineRenderer(bounds);
 //#endif // DEBUG
 
 	Component::init(id);
@@ -44,8 +44,10 @@ void CollisionComponent::Update()
 
 	lastTransform = parent->transform;
 
+	checkCollision();
+
 //#ifdef _DEBUG
-	if (Tools::debug)
+	//if (Tools::debug)
 		lines->transform = parent->transform;	
 //#endif // DEBUG
 }
@@ -192,6 +194,31 @@ bool CollisionComponent::checkCollision(glm::vec3& push)
 		return collision;
 }
 
+void CollisionComponent::checkCollision()
+{
+	std::unordered_map<uint32_t, GameObject>* map = &parent->GetSetup()->GetObjectContainer()->MasterGameObjectList;
+
+	for (auto obj = map->begin(); obj != map->end(); ++obj)
+	{ 
+		lines->color = { 0, 1, 0 };
+		if (obj->second.ID == parent->ID)
+			continue;
+		ModelComponent* m = obj->second.GetComponent<ModelComponent>();
+		if (m == nullptr)
+			continue;
+
+		if (obj->second.ID == excludeID)
+			continue;
+
+		if (collide(bounds * parent->transform.scale + parent->transform.position, m->model.getBounds() * obj->second.transform.scale + obj->second.transform.position))
+		{
+			lines->color = { 1, 0, 0 };
+
+			parent->OnCollision();
+			break;
+		}
+	}
+}
 
 
 bool CollisionComponent::collide(Bounds obounds, Bounds mbounds)
@@ -216,7 +243,7 @@ void CollisionComponent::freeData()
 {
 	parent->GetSetup()->GetObjectContainer()->drawables.erase(GetID());
 //#ifdef _DEBUG
-	if (Tools::debug)
+	//if (Tools::debug)
 		delete lines;
 //#endif // DEBUG
 }
@@ -224,6 +251,11 @@ void CollisionComponent::freeData()
 CollisionComponent::CollisionComponent()
 {
 	
+}
+
+CollisionComponent::CollisionComponent(LineRenderer* lr)
+{
+	lines = new LineRenderer(*lr);
 }
 
 

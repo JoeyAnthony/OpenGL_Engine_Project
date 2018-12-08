@@ -33,9 +33,14 @@ void LineRenderer::Draw(CameraComponent* cam)
 	glUseProgram(0);
 }
 
-LineRenderer::LineRenderer(Bounds bounds, CollisionComponent* coll)
+void LineRenderer::free_data()
 {
-	parent = coll;
+	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &VAO);
+}
+
+LineRenderer::LineRenderer(Bounds bounds)
+{
 	glm::vec3 cube[]{
 		//lower square
 		glm::vec3(bounds.minBounds.x, bounds.minBounds.y, bounds.minBounds.z),
@@ -82,9 +87,16 @@ LineRenderer::LineRenderer(Bounds bounds, CollisionComponent* coll)
 
 }
 
-LineRenderer::LineRenderer(CollisionComponent* coll)
+LineRenderer::LineRenderer(const LineRenderer& lr)
 {
-	parent = coll;
+	vertices = lr.vertices;
+	color = lr.color;
+	VBO = lr.VBO;
+	VAO = lr.VAO;
+}
+
+LineRenderer::LineRenderer()
+{
 	glm::vec3 cube[]{
 
 		glm::vec3(-0.5f, -0.5f, -0.5f),
@@ -137,8 +149,10 @@ LineRenderer::LineRenderer(CollisionComponent* coll)
 
 LineRenderer::~LineRenderer()
 {
-	glDeleteBuffers(1, &VBO);
-	glDeleteVertexArrays(1, &VAO);
+
+	//gaat fout!
+	//glDeleteBuffers(1, &VBO);
+	//glDeleteVertexArrays(1, &VAO);
 }
 
 

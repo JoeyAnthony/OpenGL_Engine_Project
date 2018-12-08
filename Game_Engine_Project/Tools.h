@@ -18,7 +18,7 @@ namespace Tools
 
 	extern float deltatime;
 
-	static bool debug = false;
+	static bool debug = true;
 
 	/**
 	update deltatime values

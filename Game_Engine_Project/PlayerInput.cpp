@@ -15,6 +15,15 @@ void PlayerInput::init(uint32_t id)
 void PlayerInput::Update()
 {
 	glm::vec3 movevec = {0, 0, 0};
+
+	if (Keyboard::GetKey(GLFW_KEY_F1))
+	{
+		if(Tools::debug)
+			Tools::debug = false;
+		else
+			Tools::debug = true;
+	}
+
 	if (Keyboard::GetKey(GLFW_KEY_W))
 		movevec += glm::vec3(0, 0, -1);
 
